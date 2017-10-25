@@ -38,12 +38,13 @@ public class test {
 			if(e.getRecurrenceRule()==null){
 				//single event
 				if(isThisWeek(e.getDateStart().getValue())){
-					System.out.println(e.getSummary().getValue());
+					printEvent(e);
 				}
 			}else{
 				//reoccuring
+				//e.getDuration().getValue().
 				if(hasInWeek(e.getDateIterator(TimeZone.getDefault()))!=null){
-					System.out.println(e.getSummary().getValue());
+					printEvent(e);
 				}
 			}
 			
@@ -57,6 +58,14 @@ public class test {
 		
 		
 
+	}
+	
+	private static void printEvent(VEvent e){
+		Date tmp=(Date)e.getDateEnd().getValue();
+		//Date tmp=(Date) e.getDateStart().getValue();
+		Calendar cal=Calendar.getInstance();
+		cal.setTime(tmp);
+		System.out.println(cal.get(Calendar.DAY_OF_MONTH)+"."+(cal.get(Calendar.MONTH)+1)+"."+cal.get(Calendar.YEAR)+"\t"+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)+"\t"+e.getSummary().getValue() + e.getLocation());
 	}
 	
 	private static Date hasInWeek(DateIterator dit){
