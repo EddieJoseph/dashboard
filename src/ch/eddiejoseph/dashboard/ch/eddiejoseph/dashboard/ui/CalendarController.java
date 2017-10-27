@@ -3,16 +3,11 @@ package ch.eddiejoseph.dashboard.ch.eddiejoseph.dashboard.ui;
 import ch.eddiejoseph.dashboard.dataloader.calendar.CalendarEvent;
 import ch.eddiejoseph.dashboard.dataloader.calendar.PropertiesFactory;
 import javafx.animation.AnimationTimer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class CalendarController {
+public class CalendarController implements ChangeListener<Number> {
   @FXML
   private Pane day0;
   @FXML
@@ -61,7 +56,7 @@ public class CalendarController {
       System.out.println("Failed to generate URL");
       e.printStackTrace();
     }
-    provider=new CalendarProvider(cal1,this);
+    provider=new SingleCalendarProvider(cal1,this);
     //events=provider.getEvents();
     //System.out.println(events);
     Thread th = new Thread(provider);
@@ -73,13 +68,31 @@ public class CalendarController {
       public void handle(long now) {
         //System.out.println(System.nanoTime());
         //if(provider.hasChanged()) {
-          draw(provider.getEvents());
+          checkAndDraw(provider.getEvents());
         //}
       }
     };
     
+    //mainApp.getScene().widthProperty().addListener(new ChangeListener<Number>() {
+    //  @Override
+    //  public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+    //    draw(provider.getEvents());
+    //  }
+    //});
+    //mainApp.getScene().heightProperty().addListener(new ChangeListener<Number>() {
+    //  @Override
+    //  public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+    //    draw(provider.getEvents());
+    //  }
+    //});
+    
     timer.start();
     
+  }
+  
+  public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+    System.out.println("ll");
+    draw(provider.getEvents());
   }
   
   private List<CalendarEvent>[] sortWeek(List<CalendarEvent> events){
@@ -124,24 +137,23 @@ public class CalendarController {
     return false;
   }
   
+  public void checkAndDraw(List<CalendarEvent> events){
+    if(hasChanged(events)) {
+      draw(events);
+    }
+  }
   
   public void draw(List<CalendarEvent> events){
-    
-    
-    
-    //System.out.println(provider.hasChanged());
-    if(hasChanged(events)) {
       List<CalendarEvent>[] eventsSorted = sortWeek(events);
       for (int c = 0; c < 7; c++) {
         days[c].getChildren().clear();
         double r = 0;
         for (CalendarEvent e : eventsSorted[c]) {
-          AnchorPane pane = new Day(e, days[0]).getRoot();
+          AnchorPane pane = new UIEvent(e, days[0]).getRoot();
           r = r + days[c].getHeight() / 10;
           days[c].getChildren().add(pane);
         }
       }
-    }
   }
   
 }

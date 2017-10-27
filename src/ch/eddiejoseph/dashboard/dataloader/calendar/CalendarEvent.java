@@ -1,6 +1,7 @@
 package ch.eddiejoseph.dashboard.dataloader.calendar;
 
 import biweekly.component.VEvent;
+import ch.eddiejoseph.dashboard.ch.eddiejoseph.dashboard.ui.Utils;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -85,8 +86,8 @@ public class CalendarEvent implements Comparable<CalendarEvent>{
   public String toString(){
     String ret="";
     ret+=title+"\n";
-    ret+=zeroLead(startDate.get(Calendar.DAY_OF_MONTH))+"."+zeroLead(startDate.get(Calendar.MONTH)+1)+"."+startDate.get(Calendar.YEAR)+"\t"+zeroLead(startDate.get(Calendar.HOUR_OF_DAY))+":"+zeroLead(startDate.get(Calendar.MINUTE))+"   -   ";
-    ret+=zeroLead(endDate.get(Calendar.DAY_OF_MONTH))+"."+zeroLead(endDate.get(Calendar.MONTH)+1)+"."+endDate.get(Calendar.YEAR)+"\t"+zeroLead(endDate.get(Calendar.HOUR_OF_DAY))+":"+zeroLead(endDate.get(Calendar.MINUTE))+"\n";
+    ret+=Utils.zeroLead(startDate.get(Calendar.DAY_OF_MONTH))+"."+Utils.zeroLead(startDate.get(Calendar.MONTH)+1)+"."+startDate.get(Calendar.YEAR)+"\t"+Utils.zeroLead(startDate.get(Calendar.HOUR_OF_DAY))+":"+Utils.zeroLead(startDate.get(Calendar.MINUTE))+"   -   ";
+    ret+=Utils.zeroLead(endDate.get(Calendar.DAY_OF_MONTH))+"."+Utils.zeroLead(endDate.get(Calendar.MONTH)+1)+"."+endDate.get(Calendar.YEAR)+"\t"+Utils.zeroLead(endDate.get(Calendar.HOUR_OF_DAY))+":"+Utils.zeroLead(endDate.get(Calendar.MINUTE))+"\n";
     if(description!=null&&!description.equals("")) {
       ret +=description+"\n";
     }
@@ -96,15 +97,10 @@ public class CalendarEvent implements Comparable<CalendarEvent>{
     return ret;
   }
   
-  private String zeroLead(int min){
-    if(min<10){
-      return "0"+Integer.toString(min);
-    }
-    return Integer.toString(min);
-  }
+
   
   public boolean eventOnDay(Calendar d){
-    if(EventLoader.between(d.getTime(),d.getTime(),startDate.getTime(),endDate.getTime())){
+    if(Utils.between(d.getTime(),d.getTime(),startDate.getTime(),endDate.getTime())){
       return true;
     }
     return d.get(Calendar.YEAR)==startDate.get(Calendar.YEAR)&&d.get(Calendar.MONTH)==startDate.get(Calendar.MONTH)&&d.get(Calendar.DAY_OF_MONTH)==startDate.get(Calendar.DAY_OF_MONTH);

@@ -11,31 +11,33 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
-public class Day {
+public class UIEvent {
   @FXML
   Label title;
   @FXML
   AnchorPane root;
   
-  public Day(String title){
+  private final double SHRINK=2.0;
+  
+  protected UIEvent(String title){
     this();
     this.title.setText(title);
   }
   
-  public Day(CalendarEvent e, Pane p){
+  public UIEvent(CalendarEvent e, Pane p){
     this(e);
     double minPx=p.getHeight()/(24*60);
-    root.setPrefSize(p.getWidth(),minPx* TimeUnit.MILLISECONDS.toMinutes(e.getEndDate().getTimeInMillis()-e.getStartDate().getTimeInMillis()));
-    root.relocate(0,minPx*(e.getStartDate().get(Calendar.HOUR_OF_DAY)*60+e.getStartDate().get(Calendar.MINUTE)));
+    root.setPrefSize(p.getWidth()-2*SHRINK,minPx* TimeUnit.MILLISECONDS.toMinutes(e.getEndDate().getTimeInMillis()-e.getStartDate().getTimeInMillis())-2*SHRINK);
+    root.relocate(SHRINK,SHRINK+minPx*(e.getStartDate().get(Calendar.HOUR_OF_DAY)*60+e.getStartDate().get(Calendar.MINUTE)));
     
   }
   
-  public Day(CalendarEvent e){
+  protected UIEvent(CalendarEvent e){
     this(e.getTitle());
   }
   
-  public Day(){
-    FXMLLoader loader=new FXMLLoader(getClass().getResource("Day.fxml"));
+  protected UIEvent(){
+    FXMLLoader loader=new FXMLLoader(getClass().getResource("UIEvent.fxml"));
     loader.setController(this);
     try{
       loader.load();

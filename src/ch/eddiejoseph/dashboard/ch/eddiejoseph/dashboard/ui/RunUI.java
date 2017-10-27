@@ -16,6 +16,7 @@ public class RunUI extends Application {
   }
   Stage primaryStage;
   private AnchorPane rootLayout;
+  Scene scene;
   @Override
   public void start(Stage primaryStage) {
     this.primaryStage=primaryStage;
@@ -31,17 +32,25 @@ public class RunUI extends Application {
     
   }
   
+  public Scene getScene(){
+    return scene;
+  }
+  
   public void initRunUI(){
     try {
       FXMLLoader loader = new FXMLLoader();
       loader.setLocation(RunUI.class.getResource("CalView.fxml"));
       rootLayout = (AnchorPane) loader.load();
+      scene=new Scene(rootLayout);
   
       CalendarController controller = loader.getController();
       controller.setMainApp(this);
       
-      Scene scene=new Scene(rootLayout);
+      
       primaryStage.setScene(scene);
+      
+      scene.widthProperty().addListener(controller);
+      scene.heightProperty().addListener(controller);
       primaryStage.show();
     }catch (Exception e){
       e.printStackTrace();
@@ -51,7 +60,7 @@ public class RunUI extends Application {
   public void showDays(){
     try {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(RunUI.class.getResource("Day.fxml"));
+      loader.setLocation(RunUI.class.getResource("UIEvent.fxml"));
       Canvas day = (Canvas) loader.load();
       for(int c=0;c<7;c++) {
         System.out.println(rootLayout.getChildren().get(0));
