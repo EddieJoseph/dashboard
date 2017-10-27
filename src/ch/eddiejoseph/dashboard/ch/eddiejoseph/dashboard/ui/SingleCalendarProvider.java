@@ -11,20 +11,18 @@ import java.util.List;
 public class SingleCalendarProvider extends CalendarProvider {
   private URL url;
   
-  public List<CalendarEvent> getEvents() {
-    return events;
-  }
+
   
 
   
   private Calendar from;
   private Calendar to;
-  private List<CalendarEvent> events;
-  private EventLoader loader;
-  private CalendarController controller;
   
-  public SingleCalendarProvider(URL url, CalendarController controller){
-    this.controller=controller;
+  private EventLoader loader;
+  //private CalendarController controller;
+  
+  public SingleCalendarProvider(URL url){
+    //this.controller=controller;
     this.url=url;
     loader=new EventLoader(url);
     from = Calendar.getInstance();
@@ -39,24 +37,6 @@ public class SingleCalendarProvider extends CalendarProvider {
   }
   
   
-  public List<CalendarEvent> call(){
-    for(;;){
-      try {
-        updateCalendar();
-        if (isCancelled()) {
-          return events;
-        }
-        try {
-          Thread.sleep(1000);
-        }catch(InterruptedException e){
-          if (isCancelled()) {
-            return events;
-          }
-        }
-      }catch (Exception e){
-        return events;
-      }
-    }
-  }
+
   
 }

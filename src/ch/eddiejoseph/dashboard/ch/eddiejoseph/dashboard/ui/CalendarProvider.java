@@ -9,6 +9,8 @@ import java.util.List;
 public abstract class CalendarProvider extends Task<List<CalendarEvent>> {
   protected Calendar from;
   protected Calendar to;
+  protected List<CalendarEvent> events;
+  protected int waitTime=10000;
   
   public Calendar getFrom() {
     return from;
@@ -27,8 +29,28 @@ public abstract class CalendarProvider extends Task<List<CalendarEvent>> {
     this.to = to;
     updateCalendar();
   }
-  public abstract List<CalendarEvent> call();
-  public abstract List<CalendarEvent> getEvents();
+  public List<CalendarEvent> call(){
+    for(;;){
+      try {
+        updateCalendar();
+        if (isCancelled()) {
+          return events;
+        }
+        try {
+          Thread.sleep(waitTime);
+        }catch(InterruptedException e){
+          if (isCancelled()) {
+            return events;
+          }
+        }
+      }catch (Exception e){
+        return events;
+      }
+    }
+  }
+  public List<CalendarEvent> getEvents() {
+    return events;
+  }
   protected abstract void updateCalendar();
   
 }

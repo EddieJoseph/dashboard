@@ -48,17 +48,25 @@ public class CalendarController implements ChangeListener<Number> {
   private void initialize(){
     days=new Pane[7];
     days[0]=day0;days[1]=day1;days[2]=day2;days[3]=day3;days[4]=day4;days[5]=day5;days[6]=day6;
-    String urltext= PropertiesFactory.getPropertie("calurle");
-    URL cal1=null;
+    String []urlTexts=new String[7];
+    urlTexts[0]= PropertiesFactory.getPropertie("calurle");
+    urlTexts[1]= PropertiesFactory.getPropertie("calurlr");
+    urlTexts[2]= PropertiesFactory.getPropertie("calurlu");
+    urlTexts[3]= PropertiesFactory.getPropertie("calurla");
+    urlTexts[4]= PropertiesFactory.getPropertie("calurlal");
+    urlTexts[5]= PropertiesFactory.getPropertie("calurlp");
+    urlTexts[6]= PropertiesFactory.getPropertie("calurlb");
+  
+    URL cal1[]=new URL[urlTexts.length];
     try {
-      cal1= new URL(urltext);
+      for (int count=0;count<urlTexts.length;count++) {
+        cal1[count] = new URL(urlTexts[count]);
+      }
     } catch (MalformedURLException e) {
       System.out.println("Failed to generate URL");
       e.printStackTrace();
     }
-    provider=new SingleCalendarProvider(cal1,this);
-    //events=provider.getEvents();
-    //System.out.println(events);
+    provider=new MultiCalendarProvider(cal1);
     Thread th = new Thread(provider);
     th.setDaemon(true);
     th.start();
@@ -66,32 +74,13 @@ public class CalendarController implements ChangeListener<Number> {
     AnimationTimer timer = new AnimationTimer() {
       @Override
       public void handle(long now) {
-        //System.out.println(System.nanoTime());
-        //if(provider.hasChanged()) {
           checkAndDraw(provider.getEvents());
-        //}
       }
     };
-    
-    //mainApp.getScene().widthProperty().addListener(new ChangeListener<Number>() {
-    //  @Override
-    //  public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-    //    draw(provider.getEvents());
-    //  }
-    //});
-    //mainApp.getScene().heightProperty().addListener(new ChangeListener<Number>() {
-    //  @Override
-    //  public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-    //    draw(provider.getEvents());
-    //  }
-    //});
-    
     timer.start();
-    
   }
   
   public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-    System.out.println("ll");
     draw(provider.getEvents());
   }
   
