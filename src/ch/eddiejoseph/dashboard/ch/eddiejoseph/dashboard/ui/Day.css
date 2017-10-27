@@ -1,0 +1,10 @@
+.background {
+    -fx-background-color: #11e9eb;
+    -fx-border-radius: 10 10 10 10;
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-color: black;
+    -fx-border-width: 0.5px;
+
+
+
+}

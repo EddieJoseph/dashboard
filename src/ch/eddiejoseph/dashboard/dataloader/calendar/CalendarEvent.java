@@ -103,4 +103,11 @@ public class CalendarEvent implements Comparable<CalendarEvent>{
     return Integer.toString(min);
   }
   
+  public boolean eventOnDay(Calendar d){
+    if(EventLoader.between(d.getTime(),d.getTime(),startDate.getTime(),endDate.getTime())){
+      return true;
+    }
+    return d.get(Calendar.YEAR)==startDate.get(Calendar.YEAR)&&d.get(Calendar.MONTH)==startDate.get(Calendar.MONTH)&&d.get(Calendar.DAY_OF_MONTH)==startDate.get(Calendar.DAY_OF_MONTH);
+  }
+  
 }

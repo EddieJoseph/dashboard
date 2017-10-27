@@ -3,3 +3,4 @@ libs/**
 .idea/**
 dashboard.iml
 dashboard.properties
+/src/ch/eddiejoseph/dashboard/fx/

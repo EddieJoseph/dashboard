@@ -13,20 +13,24 @@ import java.util.*;
 
 public class EventLoader {
   ICalendar ical=null;
+  URL url;
+  
   public EventLoader(URL url){
+    this.url=url;
+  }
+  
+  
+  
+  public List<CalendarEvent> load(Date from, Date to){
+  
     try {
       ical= Biweekly.parse(url.openStream()).first();
     } catch (IOException e) {
       System.out.println("Couldn't open stream to URL");
       e.printStackTrace();
-      System.exit(-1);
+      //System.exit(-1);
     }
     
-    
-    
-  }
-  
-  public List<CalendarEvent> load(Date from, Date to){
     ArrayList<CalendarEvent> events= new ArrayList<>();
     for(VEvent e : ical.getEvents()){
       if(e.getRecurrenceRule()==null){
@@ -56,11 +60,11 @@ public class EventLoader {
     Collections.sort(events);
     return events;
   }
-  private boolean between(VEvent e,Date from, Date to){
+  public static boolean between(VEvent e,Date from, Date to){
     return between(e.getDateStart().getValue(),e.getDateEnd().getValue(),from,to);
   }
   
-  private boolean between(Date start, Date end,Date from,Date to){
+  public static boolean between(Date start, Date end,Date from,Date to){
     //System.out.println(start+"\t:\t"+from);
     return start.after(from)&&start.before(to)||end.after(from)&&end.before(to);
   }
