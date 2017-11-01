@@ -6,8 +6,9 @@ import javafx.animation.AnimationTimer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.Cell;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,25 +16,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class CalendarController implements ChangeListener<Number> {
-  @FXML
-  private Pane day0;
-  @FXML
-  private Pane day1;
-  @FXML
-  private Pane day2;
-  @FXML
-  private Pane day3;
-  @FXML
-  private Pane day4;
-  @FXML
-  private Pane day5;
-  @FXML
-  private Pane day6;
+public class CalendarControllerEmpty implements ChangeListener<Number> {
+ @FXML
+  private AnchorPane anchor;
   
   private RunUI mainApp;
   
-  private Pane[] days;
+  private Day[] days;
   
   private List<CalendarEvent> events;
   
@@ -43,11 +32,42 @@ public class CalendarController implements ChangeListener<Number> {
   
   private CalendarProvider provider;
   
+  public static final int nrOfDays=8;
+  
+  public static boolean weekstart=false;
   
   @FXML
   private void initialize(){
-    days=new Pane[7];
-    days[0]=day0;days[1]=day1;days[2]=day2;days[3]=day3;days[4]=day4;days[5]=day5;days[6]=day6;
+    days = new Day[nrOfDays];
+    
+    GridPane grid=new GridPane();
+    anchor.getChildren().add(grid);
+    int gridIndex = anchor.getChildren().indexOf(grid);
+    anchor.setBottomAnchor(grid,0.0);
+    anchor.setTopAnchor(grid,0.0);
+    anchor.setLeftAnchor(grid,0.0);
+    anchor.setRightAnchor(grid,0.0);
+    
+    RowConstraints rc = new RowConstraints();
+    rc.setFillHeight(true);
+    rc.setVgrow(Priority.ALWAYS);
+    grid.getRowConstraints().add(rc);
+    
+    grid.getStyleClass().add("hlines");
+    for (int c=0;c<nrOfDays;c++){
+      ColumnConstraints cc = new ColumnConstraints();
+      cc.setFillWidth(true);
+      //cc.setHgrow(Priority.ALLWAYS);
+      cc.setPercentWidth(100.0/(double)nrOfDays);
+      grid.getColumnConstraints().add(cc);
+      days[c]=new Day(Integer.toString(c));
+      grid.add(days[c].getWholeDay(),c,0);
+    }
+    
+    grid.gridLinesVisibleProperty().setValue(true);
+    grid.toFront();
+    
+    
     String []urlTexts=new String[7];
     urlTexts[0]= PropertiesFactory.getPropertie("calurle");
     urlTexts[1]= PropertiesFactory.getPropertie("calurlr");
@@ -56,6 +76,7 @@ public class CalendarController implements ChangeListener<Number> {
     urlTexts[4]= PropertiesFactory.getPropertie("calurlal");
     urlTexts[5]= PropertiesFactory.getPropertie("calurlp");
     urlTexts[6]= PropertiesFactory.getPropertie("calurlb");
+    //urlTexts=new String[0];
   
     URL cal1[]=new URL[urlTexts.length];
     try {
@@ -66,14 +87,14 @@ public class CalendarController implements ChangeListener<Number> {
       System.out.println("Failed to generate URL");
       e.printStackTrace();
     }
-    Calendar from=Utils.getStartOfWeek();
-    Calendar to =Utils.getStartOfWeek();
-    to.add(Calendar.DAY_OF_MONTH,7);
+    Calendar from=getStartDay();
+    Calendar to=getStartDay();
+    to.add(Calendar.DAY_OF_MONTH,nrOfDays);
     provider=new MultiCalendarProvider(from,to,cal1);
     Thread th = new Thread(provider);
     th.setDaemon(true);
     th.start();
-    //draw(events);
+    
     AnimationTimer timer = new AnimationTimer() {
       @Override
       public void handle(long now) {
@@ -87,25 +108,39 @@ public class CalendarController implements ChangeListener<Number> {
     draw(provider.getEvents());
   }
   
-  private List<CalendarEvent>[] sortWeek(List<CalendarEvent> events){
-    int[] t=new int[7];
-    List<CalendarEvent>[] week=new List[7];
-    for(int i=0;i<7;i++){
-      week[i]=new ArrayList<CalendarEvent>();
+  private List<CalendarEvent>[] sortDay(List<CalendarEvent> events){
+    int[] t=new int[nrOfDays];
+    List<CalendarEvent>[] dayList=new List[nrOfDays];
+    for(int i=0;i<nrOfDays;i++){
+      dayList[i]=new ArrayList<CalendarEvent>();
     }
-    Calendar c = Utils.getStartOfWeek();
-    for(int d =0;d<7;d++){
+    Calendar c=getStartDay();
+    for(int d =0;d<nrOfDays;d++){
       Calendar day=Calendar.getInstance();
       day.setTime(c.getTime());
       day.add(Calendar.DAY_OF_MONTH,d);
       for(CalendarEvent e:events){
         if(e.eventOnDay(day)){
-          week[d].add(e);
+          dayList[d].add(e);
         }
       }
     }
-    return week;
+    return dayList;
   }
+  
+  private Calendar getStartDay(){
+    if(weekstart){
+      return Utils.getStartOfWeek();
+    }else{
+      Calendar c = Calendar.getInstance();
+      c.set(Calendar.MINUTE,0);
+      c.set(Calendar.HOUR_OF_DAY,0);
+      return c;
+      
+    }
+    
+  }
+  
   
   private String prev="";
   private boolean hasChanged(List<CalendarEvent> events){
@@ -128,14 +163,17 @@ public class CalendarController implements ChangeListener<Number> {
   }
   
   public void draw(List<CalendarEvent> events){
-      List<CalendarEvent>[] eventsSorted = sortWeek(events);
-      for (int c = 0; c < 7; c++) {
-        days[c].getChildren().clear();
-        double r = 0;
+      List<CalendarEvent>[] eventsSorted = sortDay(events);
+      for (int c = 0; c < nrOfDays; c++) {
+        Calendar titleDate=getStartDay();
+        titleDate.add(Calendar.DAY_OF_MONTH,c);
+        days[c].setTitle(titleDate.get(Calendar.DAY_OF_MONTH)+" "+(titleDate.get(Calendar.MONTH)+1)+" "+titleDate.get(Calendar.YEAR));
+        days[c].getEventPane().getChildren().clear();
+        //double r = 0;
         for (CalendarEvent e : eventsSorted[c]) {
-          AnchorPane pane = new UIEvent(e, days[0]).getRoot();
-          r = r + days[c].getHeight() / 10;
-          days[c].getChildren().add(pane);
+          AnchorPane pane = new UIEvent(e, days[0].getEventPane()).getRoot();
+          //r = r + days[c].getEventPane().getHeight() / 10;
+          days[c].getEventPane().getChildren().add(pane);
         }
       }
   }

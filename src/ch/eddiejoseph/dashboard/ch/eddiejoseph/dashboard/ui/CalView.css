@@ -8,3 +8,8 @@
 .secline{
     -fx-background-color: #d8d8d8;
 }
+
+.cell {
+    /* 1 pixel border around the left and bottom of each cell: */
+    -fx-grid-lines-visible: true;
+}

@@ -39,11 +39,11 @@ public class RunUI extends Application {
   public void initRunUI(){
     try {
       FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(RunUI.class.getResource("CalView.fxml"));
+      loader.setLocation(RunUI.class.getResource("CalViewEmpty.fxml"));
       rootLayout = (AnchorPane) loader.load();
       scene=new Scene(rootLayout);
   
-      CalendarController controller = loader.getController();
+      CalendarControllerEmpty controller = loader.getController();
       controller.setMainApp(this);
       
       
