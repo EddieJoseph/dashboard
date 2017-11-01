@@ -3,5 +3,8 @@
 }
 .hlines{
     -fx-grid-lines-visible: true;
+}
 
+.secline{
+    -fx-background-color: #d8d8d8;
 }

@@ -90,15 +90,7 @@ public class CalendarController implements ChangeListener<Number> {
     for(int i=0;i<7;i++){
       week[i]=new ArrayList<CalendarEvent>();
     }
-    Calendar c= Calendar.getInstance();
-    int dow=c.get(Calendar.DAY_OF_WEEK);
-    if(dow!=2){
-      if(dow<2){
-        c.add(Calendar.DAY_OF_MONTH,-6);
-      }else{
-        c.add(Calendar.DAY_OF_MONTH,-(dow-2));
-      }
-    }
+    Calendar c = Utils.getStartOfWeek();
     for(int d =0;d<7;d++){
       Calendar day=Calendar.getInstance();
       day.setTime(c.getTime());

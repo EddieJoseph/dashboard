@@ -25,10 +25,11 @@ public class SingleCalendarProvider extends CalendarProvider {
     //this.controller=controller;
     this.url=url;
     loader=new EventLoader(url);
-    from = Calendar.getInstance();
-    to = Calendar.getInstance();
-    from.set(2017,10-1,23,0,0);
-    to.set(2017,10-1,30,0,0);
+    from = Utils.getStartOfWeek();
+    to = Utils.getStartOfWeek();
+    to.add(Calendar.DAY_OF_MONTH,7);
+    //from.set(2017,10-1,23,0,0);
+    //to.set(2017,10-1,30,0,0);
     updateCalendar();
   }
   
