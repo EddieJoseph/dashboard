@@ -26,6 +26,7 @@ public class SingleCalendarProvider extends CalendarProvider {
     this.from = from;
     this.to = to;
     updateCalendar();
+    
   }
   
   protected void updateCalendar(){

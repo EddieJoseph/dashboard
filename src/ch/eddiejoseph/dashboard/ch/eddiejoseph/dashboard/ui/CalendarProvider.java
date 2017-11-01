@@ -18,7 +18,7 @@ public abstract class CalendarProvider extends Task<List<CalendarEvent>> {
   
   public void setFrom(Calendar from) {
     this.from = from;
-    updateCalendar();
+    //updateCalendar();
   }
   
   public Calendar getTo() {
@@ -27,7 +27,7 @@ public abstract class CalendarProvider extends Task<List<CalendarEvent>> {
   
   public void setTo(Calendar to) {
     this.to = to;
-    updateCalendar();
+    //updateCalendar();
   }
   public List<CalendarEvent> call(){
     for(;;){

@@ -16,6 +16,9 @@ public class MultiCalendarProvider extends CalendarProvider {
     for(URL url : urls){
       singleProviders.add(new SingleCalendarProvider(url,from,to));
     }
+    setFrom(from);
+    setTo(to);
+    
     updateCalendar();
     
   }

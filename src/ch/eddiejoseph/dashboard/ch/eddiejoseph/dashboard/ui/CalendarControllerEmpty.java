@@ -95,11 +95,25 @@ public class CalendarControllerEmpty implements ChangeListener<Number> {
     th.setDaemon(true);
     th.start();
     
+    Calendar currentDate=Calendar.getInstance();
     AnimationTimer timer = new AnimationTimer() {
       @Override
       public void handle(long now) {
+        checkDay();
           checkAndDraw(provider.getEvents());
       }
+      
+      private void checkDay(){
+        Calendar c=provider.getTo();
+        Calendar from=getStartDay();
+        if(from.get(Calendar.YEAR)==c.get(Calendar.YEAR)&&from.get(Calendar.MONTH)==c.get(Calendar.MONTH)&&from.get(Calendar.DAY_OF_MONTH)==c.get(Calendar.DAY_OF_MONTH)){
+          provider.setFrom(from);
+          Calendar to=getStartDay();
+          to.add(Calendar.DAY_OF_MONTH,nrOfDays);
+          provider.setTo(to);
+        }
+      }
+      
     };
     timer.start();
   }
@@ -167,7 +181,7 @@ public class CalendarControllerEmpty implements ChangeListener<Number> {
       for (int c = 0; c < nrOfDays; c++) {
         Calendar titleDate=getStartDay();
         titleDate.add(Calendar.DAY_OF_MONTH,c);
-        days[c].setTitle(titleDate.get(Calendar.DAY_OF_MONTH)+" "+(titleDate.get(Calendar.MONTH)+1)+" "+titleDate.get(Calendar.YEAR));
+        days[c].setTitle(Utils.nameOfDay(titleDate.get(Calendar.DAY_OF_WEEK))+"\n"+titleDate.get(Calendar.DAY_OF_MONTH)+" "+(titleDate.get(Calendar.MONTH)+1)+" "+titleDate.get(Calendar.YEAR));
         days[c].getEventPane().getChildren().clear();
         //double r = 0;
         for (CalendarEvent e : eventsSorted[c]) {
