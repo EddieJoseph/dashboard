@@ -188,6 +188,9 @@ public class CalendarControllerEmpty implements ChangeListener<Number> {
           AnchorPane pane = new UIEvent(e, days[0].getEventPane()).getRoot();
           //r = r + days[c].getEventPane().getHeight() / 10;
           days[c].getEventPane().getChildren().add(pane);
+          days[c].getEventPane().setRightAnchor(pane,0.0);
+          days[c].getEventPane().setLeftAnchor(pane,0.0);
+          
         }
       }
   }

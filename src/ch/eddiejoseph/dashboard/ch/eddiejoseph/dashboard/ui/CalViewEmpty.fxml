@@ -7,15 +7,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1200.0" prefWidth="1800.0" stylesheets="@CalView.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.eddiejoseph.dashboard.ch.eddiejoseph.dashboard.ui.CalendarControllerEmpty">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1024.0" stylesheets="@CalView.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.eddiejoseph.dashboard.ch.eddiejoseph.dashboard.ui.CalendarControllerEmpty">
    <children>
-      <GridPane layoutY="67.0" styleClass="hlines" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <GridPane styleClass="hlines" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="84.0" minWidth="84.0" prefWidth="84.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
             <ColumnConstraints hgrow="SOMETIMES" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -41,56 +41,56 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="2" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="4" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="6" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="8" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="10" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="12" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="14" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="16" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="18" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="20" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="22" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="14" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="16" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="18" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="20" />
-            <Pane prefHeight="200.0" prefWidth="200.0" styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="22" />
-            <Label text="00:00" />
-            <Label text="01:00" GridPane.rowIndex="1" />
-            <Label text="02:00" GridPane.rowIndex="2" />
-            <Label text="03:00" GridPane.rowIndex="3" />
-            <Label text="04:00" GridPane.rowIndex="4" />
-            <Label text="05:00" GridPane.rowIndex="5" />
-            <Label text="06:00" GridPane.rowIndex="6" />
-            <Label text="07:00" GridPane.rowIndex="7" />
-            <Label text="08:00" GridPane.rowIndex="8" />
-            <Label text="09:00" GridPane.rowIndex="9" />
-            <Label text="10:00" GridPane.rowIndex="10" />
-            <Label text="11:00" GridPane.rowIndex="11" />
-            <Label text="12:00" GridPane.rowIndex="12" />
-            <Label text="13:00" GridPane.rowIndex="13" />
-            <Label text="14:00" GridPane.rowIndex="14" />
-            <Label text="15:00" GridPane.rowIndex="15" />
-            <Label text="16:00" GridPane.rowIndex="16" />
-            <Label text="17:00" GridPane.rowIndex="17" />
-            <Label text="18:00" GridPane.rowIndex="18" />
-            <Label text="19:00" GridPane.rowIndex="19" />
-            <Label text="20:00" GridPane.rowIndex="20" />
-            <Label text="21:00" GridPane.rowIndex="21" />
-            <Label text="22:00" GridPane.rowIndex="22" />
-            <Label text="23:00" GridPane.rowIndex="23" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="2" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="4" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="6" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="8" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="10" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="12" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="14" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="16" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="18" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="20" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.rowIndex="22" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="14" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="16" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="18" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="20" />
+            <Pane styleClass="secline" stylesheets="@CalView.css" GridPane.columnIndex="1" GridPane.rowIndex="22" />
+            <Label alignment="CENTER" prefHeight="20.0" prefWidth="49.0" styleClass="time" text="00:00" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="01:00" GridPane.rowIndex="1" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="02:00" GridPane.rowIndex="2" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="03:00" GridPane.rowIndex="3" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="04:00" GridPane.rowIndex="4" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="05:00" GridPane.rowIndex="5" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="06:00" GridPane.rowIndex="6" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="07:00" GridPane.rowIndex="7" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="08:00" GridPane.rowIndex="8" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="09:00" GridPane.rowIndex="9" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="10:00" GridPane.rowIndex="10" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="11:00" GridPane.rowIndex="11" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="12:00" GridPane.rowIndex="12" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="13:00" GridPane.rowIndex="13" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="14:00" GridPane.rowIndex="14" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="15:00" GridPane.rowIndex="15" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="16:00" GridPane.rowIndex="16" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="17:00" GridPane.rowIndex="17" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="18:00" GridPane.rowIndex="18" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="19:00" GridPane.rowIndex="19" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="20:00" GridPane.rowIndex="20" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="21:00" GridPane.rowIndex="21" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="22:00" GridPane.rowIndex="22" />
+            <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="23:00" GridPane.rowIndex="23" />
          </children>
       </GridPane>
-      <AnchorPane fx:id="anchor" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="85.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="anchor" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

@@ -13,3 +13,15 @@
     /* 1 pixel border around the left and bottom of each cell: */
     -fx-grid-lines-visible: true;
 }
+.title{
+    /*-fx-font: 18px Tahoma;*/
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-lines-spacing:0em;
+
+}
+
+.time{
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
