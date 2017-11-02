@@ -18,9 +18,7 @@ public class MultiCalendarProvider extends CalendarProvider {
     }
     setFrom(from);
     setTo(to);
-    
     updateCalendar();
-    
   }
   
   
@@ -48,8 +46,5 @@ public class MultiCalendarProvider extends CalendarProvider {
   }
     Collections.sort(events);
   this.events=events;
-  //System.out.println(events);
-  //System.exit(0);
-  
   }
 }

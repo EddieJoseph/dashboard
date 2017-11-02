@@ -29,7 +29,6 @@ public class EventLoader {
     } catch (IOException e) {
       System.out.println("Couldn't open stream to URL");
       e.printStackTrace();
-      //System.exit(-1);
     }
     
     ArrayList<CalendarEvent> events= new ArrayList<>();
@@ -49,8 +48,6 @@ public class EventLoader {
           Date actD;
           do{
             actD=dit.next();
-            //System.out.println(actD);
-            //System.out.println(e.getDuration());
             if(Utils.between(actD,e.getDuration().getValue().add(actD),from,to)) {
               events.add(new CalendarEvent(e,actD));
             }

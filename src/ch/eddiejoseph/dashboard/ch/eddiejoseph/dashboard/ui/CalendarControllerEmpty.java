@@ -203,7 +203,6 @@ public class CalendarControllerEmpty  {
           uievents.add(ev);
           AnchorPane pane = ev.getRoot();
           days[c].getEventPane().getChildren().add(pane);
-          ev.resize(days[c].getEventPane().getHeight(),days[c].getEventPane().getWidth());
 
         }
       }

@@ -21,15 +21,8 @@ public class RunUI extends Application {
   public void start(Stage primaryStage) {
     this.primaryStage=primaryStage;
     this.primaryStage.setTitle("Dashboard");
-    
     initRunUI();
-    
-    //showDays();
-    
-    //rootLayout.setBackground(new Background(new BackgroundFill(Color.web("#ACACE6"), null,null)));
-    
     this.primaryStage.show();
-    
   }
   
   public Scene getScene(){
@@ -42,15 +35,9 @@ public class RunUI extends Application {
       loader.setLocation(RunUI.class.getResource("CalViewEmpty.fxml"));
       rootLayout = (AnchorPane) loader.load();
       scene=new Scene(rootLayout);
-  
       CalendarControllerEmpty controller = loader.getController();
       controller.setMainApp(this);
-      
-      
       primaryStage.setScene(scene);
-      
-      //scene.widthProperty().addListener(controller);
-      //scene.heightProperty().addListener(controller);
       primaryStage.show();
     }catch (Exception e){
       e.printStackTrace();

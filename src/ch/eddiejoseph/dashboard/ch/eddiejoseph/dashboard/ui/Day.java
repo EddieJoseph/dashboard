@@ -31,8 +31,6 @@ public class Day {
     }catch(IOException e){
       e.printStackTrace();
     }
-    
-    
     this.title.setText(title);
   }
   

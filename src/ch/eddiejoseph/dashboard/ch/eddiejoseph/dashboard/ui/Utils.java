@@ -11,7 +11,6 @@ public class Utils {
   }
   
   public static boolean between(Date start, Date end,Date from,Date to){
-    //System.out.println(start+"\t:\t"+from);
     return start.after(from)&&start.before(to)||end.after(from)&&end.before(to);
   }
   
@@ -48,7 +47,5 @@ public class Utils {
       case 7:return "Samstag";
       default : return null;
     }
-    
   }
-  
 }

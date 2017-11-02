@@ -33,8 +33,7 @@ public class UIEvent {
     this(e);
     event=e;
     upperPane=p;
-    
-    //resize(p.getMaxHeight());
+    resize(p.getHeight(),p.getWidth());
   }
   
   public void resizeh(double maxHeight){
@@ -49,25 +48,14 @@ public class UIEvent {
     root.relocate(SHRINK,SHRINK+minPx*(event.getStartDate().get(Calendar.HOUR_OF_DAY)*60+event.getStartDate().get(Calendar.MINUTE)));
   }
   
-  
-  //private Day d;
-  //public void setDay(Day d){
-  //  this.d=d;
-  //}
-  
-  //public void setAnchors(double height){
-  //  upperPane.setTopAnchor(root,topAnchor(height) );
-  //  upperPane.setBottomAnchor(root,bottomAnchor(height));
-  //}
-  
+  @Deprecated
   public double topAnchor(double max){
     double minPx=max/(24.0*60.0);
     return minPx*(event.getStartDate().get(Calendar.HOUR_OF_DAY)*60.0+event.getStartDate().get(Calendar.MINUTE));
   }
-  
+  @Deprecated
   public double bottomAnchor(double max){
     double minPx=max/(24.0*60.0);
-    //return max-minPx*TimeUnit.MILLISECONDS.toMinutes(event.getEndDate().getTimeInMillis()-event.getStartDate().getTimeInMillis())+minPx*(event.getStartDate().get(Calendar.HOUR_OF_DAY)*60+event.getStartDate().get(Calendar.MINUTE));
     double minutes=event.getEndDate().get(Calendar.HOUR_OF_DAY)*60.0+event.getEndDate().get(Calendar.MINUTE);
     return max-minPx*minutes;
   }
@@ -85,16 +73,6 @@ public class UIEvent {
     }catch(IOException e){
       e.printStackTrace();
     }
-    
-    //root=new AnchorPane();
-    //title=new Label();
-    //root.getChildren().add(title);
-    //root.setTopAnchor(title,0.0);
-    //root.setLeftAnchor(title,0.0);
-    //root.setRightAnchor(title,0.0);
-    //root.getStyleClass().add("backgroundEvent");
-    //title.getStyleClass().add("titleEvent");
-    
   }
   public AnchorPane getRoot(){
     return root;
