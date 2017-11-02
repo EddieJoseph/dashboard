@@ -133,9 +133,9 @@ public class CalendarController implements ChangeListener<Number> {
         days[c].getChildren().clear();
         double r = 0;
         for (CalendarEvent e : eventsSorted[c]) {
-          AnchorPane pane = new UIEvent(e, days[0]).getRoot();
+         // AnchorPane pane = new UIEvent(e, days[c]).getRoot();
           r = r + days[c].getHeight() / 10;
-          days[c].getChildren().add(pane);
+        //  days[c].getChildren().add(pane);
         }
       }
   }

@@ -10,7 +10,7 @@ public abstract class CalendarProvider extends Task<List<CalendarEvent>> {
   protected Calendar from;
   protected Calendar to;
   protected List<CalendarEvent> events;
-  protected int waitTime=10000;
+  protected int waitTime=1000;
   
   public Calendar getFrom() {
     return from;

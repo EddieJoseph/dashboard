@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class CalendarControllerEmpty implements ChangeListener<Number> {
+public class CalendarControllerEmpty  {
  @FXML
   private AnchorPane anchor;
   
@@ -28,18 +28,31 @@ public class CalendarControllerEmpty implements ChangeListener<Number> {
   
   public void setMainApp(RunUI mainApp) {
     this.mainApp = mainApp;
+    mainApp.scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+      for(UIEvent e:uievents){
+        e.resizeh(newValue.doubleValue()-50);
+      }
+    });
+    mainApp.scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+      for(UIEvent e:uievents){
+        e.resizew((newValue.doubleValue()-50)/nrOfDays);
+      }
+    });
+    
   }
   
   private CalendarProvider provider;
   
-  public static final int nrOfDays=8;
+  public static final int nrOfDays=5;
   
   public static boolean weekstart=false;
+  
+  public List<UIEvent> uievents;
   
   @FXML
   private void initialize(){
     days = new Day[nrOfDays];
-    
+    uievents=new ArrayList<>();
     GridPane grid=new GridPane();
     anchor.getChildren().add(grid);
     int gridIndex = anchor.getChildren().indexOf(grid);
@@ -118,9 +131,6 @@ public class CalendarControllerEmpty implements ChangeListener<Number> {
     timer.start();
   }
   
-  public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-    draw(provider.getEvents());
-  }
   
   private List<CalendarEvent>[] sortDay(List<CalendarEvent> events){
     int[] t=new int[nrOfDays];
@@ -175,9 +185,13 @@ public class CalendarControllerEmpty implements ChangeListener<Number> {
       draw(events);
     }
   }
-  
+
   public void draw(List<CalendarEvent> events){
+    
+    
+    
       List<CalendarEvent>[] eventsSorted = sortDay(events);
+      uievents.clear();
       for (int c = 0; c < nrOfDays; c++) {
         Calendar titleDate=getStartDay();
         titleDate.add(Calendar.DAY_OF_MONTH,c);
@@ -185,14 +199,15 @@ public class CalendarControllerEmpty implements ChangeListener<Number> {
         days[c].getEventPane().getChildren().clear();
         //double r = 0;
         for (CalendarEvent e : eventsSorted[c]) {
-          AnchorPane pane = new UIEvent(e, days[0].getEventPane()).getRoot();
-          //r = r + days[c].getEventPane().getHeight() / 10;
+          UIEvent ev=new UIEvent(e, days[c].getEventPane());
+          uievents.add(ev);
+          AnchorPane pane = ev.getRoot();
           days[c].getEventPane().getChildren().add(pane);
-          days[c].getEventPane().setRightAnchor(pane,0.0);
-          days[c].getEventPane().setLeftAnchor(pane,0.0);
-          
+          ev.resize(days[c].getEventPane().getHeight(),days[c].getEventPane().getWidth());
+
         }
       }
+
   }
   
 }

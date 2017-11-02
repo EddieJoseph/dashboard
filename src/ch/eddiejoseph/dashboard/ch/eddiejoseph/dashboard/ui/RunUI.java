@@ -50,7 +50,7 @@ public class RunUI extends Application {
       primaryStage.setScene(scene);
       
       //scene.widthProperty().addListener(controller);
-      scene.heightProperty().addListener(controller);
+      //scene.heightProperty().addListener(controller);
       primaryStage.show();
     }catch (Exception e){
       e.printStackTrace();
