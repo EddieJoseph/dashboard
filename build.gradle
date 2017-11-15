@@ -1,0 +1,51 @@
+apply plugin: 'java'
+
+repositories{
+	mavenCentral()
+	maven { url 'https://jitpack.io' }
+}
+
+dependencies{
+	compile 'com.github.mangstadt:biweekly:0.6.1'
+	compile 'com.github.mangstadt:vinnie:2.0.0'
+	//compile 'com.github.FasterXML:jackson-core:jackson-core-2.6.1'
+	testCompile "junit:junit:4.12"
+}
+
+jar{
+	baseName='dashboard'
+	version='0.0.1'
+}
+
+sourceSets{
+	main{
+		java{
+			srcDir('src')
+			//include('**.fxml')
+			//include('**.css')
+		}
+		resources{
+			srcDirs('src')
+			exclude('**.java')
+			
+		}
+	}
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ch.eddiejoseph.dashboard.ui.RunUI'
+		attributes 'Class-Path': '. dashboard-0.0.1.jar jackson-core-2.6.1.jar vinnie-2.0.0.jar'
+    }
+	from {
+            configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+        }
+}
+
+task copyProperties{
+copy{
+from 'calendar.properties'
+into 'build/libs'
+}
+}
+build.finalizedBy(copyProperties)

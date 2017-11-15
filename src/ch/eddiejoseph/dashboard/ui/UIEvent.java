@@ -1,12 +1,11 @@
-package ch.eddiejoseph.dashboard.ch.eddiejoseph.dashboard.ui;
+package ch.eddiejoseph.dashboard.ui;
 
 import ch.eddiejoseph.dashboard.dataloader.calendar.CalendarEvent;
-import javafx.beans.value.ObservableValue;
+import ch.eddiejoseph.dashboard.dataloader.calendar.PropertiesFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -33,16 +32,19 @@ public class UIEvent {
     this(e);
     event=e;
     upperPane=p;
-    resize(p.getHeight(),p.getWidth());
+    //resize(p.getHeight()-50,p.getWidth());
+    resize(Integer.parseInt(PropertiesFactory.getPropertie("height"))-50,p.getWidth());
   }
   
   public void resizeh(double maxHeight){
     resize(maxHeight,upperPane.getWidth());
   }
   public void resizew(double width){
+    System.out.println(upperPane.getHeight());
     resize(upperPane.getHeight(),width);
   }
-  public void resize(double height, double width){
+  
+  private void resize(double height, double width){
     double minPx=height/(24*60);
     root.setPrefSize(width-2*SHRINK,minPx* TimeUnit.MILLISECONDS.toMinutes(event.getEndDate().getTimeInMillis()-event.getStartDate().getTimeInMillis())-2*SHRINK);
     root.relocate(SHRINK,SHRINK+minPx*(event.getStartDate().get(Calendar.HOUR_OF_DAY)*60+event.getStartDate().get(Calendar.MINUTE)));

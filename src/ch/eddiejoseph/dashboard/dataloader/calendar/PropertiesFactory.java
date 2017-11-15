@@ -9,10 +9,10 @@ public class PropertiesFactory {
     if(prop==null){
       prop=new Properties();
       InputStream in=null;
-      in=PropertiesFactory.class.getResourceAsStream("dashboard.properties");
+      in=PropertiesFactory.class.getResourceAsStream("calendar.properties");
       if(in==null){
         try {
-          in= new FileInputStream(new File("dashboard.properties"));
+          in= new FileInputStream(new File("calendar.properties"));
         } catch (FileNotFoundException e) {
           e.printStackTrace();
         }

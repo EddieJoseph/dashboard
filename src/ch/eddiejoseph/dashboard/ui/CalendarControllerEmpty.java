@@ -1,14 +1,10 @@
-package ch.eddiejoseph.dashboard.ch.eddiejoseph.dashboard.ui;
+package ch.eddiejoseph.dashboard.ui;
 
 import ch.eddiejoseph.dashboard.dataloader.calendar.CalendarEvent;
 import ch.eddiejoseph.dashboard.dataloader.calendar.PropertiesFactory;
 import javafx.animation.AnimationTimer;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Cell;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,16 +24,25 @@ public class CalendarControllerEmpty  {
   
   public void setMainApp(RunUI mainApp) {
     this.mainApp = mainApp;
-    mainApp.scene.heightProperty().addListener((observable, oldValue, newValue) -> {
-      for(UIEvent e:uievents){
-        e.resizeh(newValue.doubleValue()-50);
-      }
-    });
-    mainApp.scene.widthProperty().addListener((observable, oldValue, newValue) -> {
-      for(UIEvent e:uievents){
-        e.resizew((newValue.doubleValue()-50)/nrOfDays);
-      }
-    });
+    //mainApp.scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+    //  for(UIEvent e:uievents){
+    //    for(Day d:days) {
+    //      d.getEventPane().setPrefWidth((newValue.doubleValue() - 50) / nrOfDays);
+    //      d.getEventPane().setMaxWidth((newValue.doubleValue() - 50) / nrOfDays);
+    //    }
+    //    e.resizeh(newValue.doubleValue()-50);
+    //  }
+    //});
+    //mainApp.scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+    //  for(UIEvent e:uievents){
+    //
+    //    for(Day d:days) {
+    //      d.getEventPane().setPrefHeight((newValue.doubleValue() - 50));
+    //      d.getEventPane().setMaxHeight((newValue.doubleValue() - 50));
+    //    }
+    //    e.resizew((newValue.doubleValue()-50)/nrOfDays);
+    //  }
+    //});
     
   }
   
@@ -82,22 +87,23 @@ public class CalendarControllerEmpty  {
     
     
     String []urlTexts=new String[7];
-    urlTexts[0]= PropertiesFactory.getPropertie("calurle");
-    urlTexts[1]= PropertiesFactory.getPropertie("calurlr");
-    urlTexts[2]= PropertiesFactory.getPropertie("calurlu");
-    urlTexts[3]= PropertiesFactory.getPropertie("calurla");
-    urlTexts[4]= PropertiesFactory.getPropertie("calurlal");
-    urlTexts[5]= PropertiesFactory.getPropertie("calurlp");
-    urlTexts[6]= PropertiesFactory.getPropertie("calurlb");
+    urlTexts[0]= PropertiesFactory.getPropertie("eddie.Privat");
+    urlTexts[1]= PropertiesFactory.getPropertie("eddie.Buisness");
+    urlTexts[2]= PropertiesFactory.getPropertie("eddie.AL");
+    urlTexts[3]= PropertiesFactory.getPropertie("eddie.Basis");
+    urlTexts[4]= PropertiesFactory.getPropertie("eddie.Leitung");
+    urlTexts[5]= PropertiesFactory.getPropertie("eddie.Studium");
+    urlTexts[6]= PropertiesFactory.getPropertie("eddie.Pruefungen");
     //urlTexts=new String[0];
   
     URL cal1[]=new URL[urlTexts.length];
+    int count=0;
     try {
-      for (int count=0;count<urlTexts.length;count++) {
+      for (count=0;count<urlTexts.length;count++) {
         cal1[count] = new URL(urlTexts[count]);
       }
     } catch (MalformedURLException e) {
-      System.out.println("Failed to generate URL");
+      System.out.println("Failed to generate URL for url["+count+"] urltext:"+urlTexts[count]);
       e.printStackTrace();
     }
     Calendar from=getStartDay();

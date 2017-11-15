@@ -1,4 +1,4 @@
-package ch.eddiejoseph.dashboard.ch.eddiejoseph.dashboard.ui;
+package ch.eddiejoseph.dashboard.ui;
 
 import ch.eddiejoseph.dashboard.dataloader.calendar.CalendarEvent;
 
@@ -6,7 +6,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.List;
 
 public class MultiCalendarProvider extends CalendarProvider {
   private ArrayList<SingleCalendarProvider> singleProviders;

@@ -2,5 +2,8 @@ out/**
 libs/**
 .idea/**
 dashboard.iml
-dashboard.properties
+*.properties
+build/**
+.gradle/**
+
 /src/ch/eddiejoseph/dashboard/fx/

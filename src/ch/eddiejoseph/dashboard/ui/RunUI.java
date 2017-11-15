@@ -1,12 +1,11 @@
-package ch.eddiejoseph.dashboard.ch.eddiejoseph.dashboard.ui;
+package ch.eddiejoseph.dashboard.ui;
 
-import ch.eddiejoseph.dashboard.fx.RootController;
+import ch.eddiejoseph.dashboard.dataloader.calendar.PropertiesFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class RunUI extends Application {
@@ -21,7 +20,12 @@ public class RunUI extends Application {
   public void start(Stage primaryStage) {
     this.primaryStage=primaryStage;
     this.primaryStage.setTitle("Dashboard");
+    primaryStage.setFullScreen(Boolean.parseBoolean(PropertiesFactory.getPropertie("fullscreen")));
+    primaryStage.setHeight(Integer.parseInt(PropertiesFactory.getPropertie("height")));
+    primaryStage.setWidth(Integer.parseInt(PropertiesFactory.getPropertie("width")));
+    primaryStage.setResizable(false);
     initRunUI();
+    
     this.primaryStage.show();
   }
   
@@ -34,11 +38,15 @@ public class RunUI extends Application {
       FXMLLoader loader = new FXMLLoader();
       loader.setLocation(RunUI.class.getResource("CalViewEmpty.fxml"));
       rootLayout = (AnchorPane) loader.load();
+      rootLayout.setPrefHeight(primaryStage.getHeight());
+      rootLayout.setPrefWidth(primaryStage.getWidth());
       scene=new Scene(rootLayout);
-      CalendarControllerEmpty controller = loader.getController();
-      controller.setMainApp(this);
       primaryStage.setScene(scene);
       primaryStage.show();
+      CalendarControllerEmpty controller = loader.getController();
+      controller.setMainApp(this);
+      //primaryStage.setScene(scene);
+      //primaryStage.show();
     }catch (Exception e){
       e.printStackTrace();
     }

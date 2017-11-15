@@ -1,4 +1,4 @@
-package ch.eddiejoseph.dashboard.ch.eddiejoseph.dashboard.ui;
+package ch.eddiejoseph.dashboard.ui;
 
 import ch.eddiejoseph.dashboard.dataloader.calendar.CalendarEvent;
 import javafx.concurrent.Task;

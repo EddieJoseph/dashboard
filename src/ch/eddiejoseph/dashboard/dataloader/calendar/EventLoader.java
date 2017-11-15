@@ -3,10 +3,9 @@ package ch.eddiejoseph.dashboard.dataloader.calendar;
 import biweekly.Biweekly;
 import biweekly.ICalendar;
 import biweekly.component.VEvent;
-import biweekly.property.Timezone;
 import biweekly.util.Duration;
 import biweekly.util.com.google.ical.compat.javautil.DateIterator;
-import ch.eddiejoseph.dashboard.ch.eddiejoseph.dashboard.ui.Utils;
+import ch.eddiejoseph.dashboard.ui.Utils;
 
 import java.io.IOException;
 import java.net.URL;

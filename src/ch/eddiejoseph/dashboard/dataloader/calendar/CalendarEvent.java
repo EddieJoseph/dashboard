@@ -1,7 +1,7 @@
 package ch.eddiejoseph.dashboard.dataloader.calendar;
 
 import biweekly.component.VEvent;
-import ch.eddiejoseph.dashboard.ch.eddiejoseph.dashboard.ui.Utils;
+import ch.eddiejoseph.dashboard.ui.Utils;
 
 import java.util.Calendar;
 import java.util.Date;
