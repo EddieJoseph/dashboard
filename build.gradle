@@ -35,7 +35,8 @@ sourceSets{
 jar {
     manifest {
         attributes 'Main-Class': 'ch.eddiejoseph.dashboard.ui.RunUI'
-		attributes 'Class-Path': '. dashboard-0.0.1.jar jackson-core-2.6.1.jar vinnie-2.0.0.jar'
+		//attributes 'Class-Path': '. dashboard-0.0.1.jar jackson-core-2.6.1.jar vinnie-2.0.0.jar'
+		attributes 'Class-Path': '. dashboard-0.0.1.jar'
     }
 	from {
             configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }

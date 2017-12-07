@@ -24,6 +24,7 @@ public class RunUI extends Application {
     primaryStage.setHeight(Integer.parseInt(PropertiesFactory.getPropertie("height")));
     primaryStage.setWidth(Integer.parseInt(PropertiesFactory.getPropertie("width")));
     primaryStage.setResizable(false);
+    primaryStage.setAlwaysOnTop(true);
     initRunUI();
     
     this.primaryStage.show();
