@@ -6,7 +6,10 @@
 }
 
 .secline{
-    -fx-background-color: #d8d8d8;
+    -fx-background-color: #514931;
+}
+.beline{
+    -fx-background-color: #675e3c;
 }
 
 .cell {
@@ -27,7 +30,7 @@
 }
 
 .backgroundEvent {
-    -fx-background-color: #11e9eb;
+    -fx-background-color: #9c979b;
     -fx-border-radius: 5 5 5 5;
     -fx-background-radius: 5 5 5 5;
     -fx-border-color: black;

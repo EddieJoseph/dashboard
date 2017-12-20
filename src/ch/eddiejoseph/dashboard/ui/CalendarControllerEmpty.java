@@ -96,31 +96,40 @@ public class CalendarControllerEmpty  {
     urlTexts[5]= PropertiesFactory.getPropertie("eddie.Studium");
     urlTexts[6]= PropertiesFactory.getPropertie("eddie.Pruefungen");
     //urlTexts=new String[0];
+    String []luzi=new String[3];
+    luzi[0]=PropertiesFactory.getPropertie("luzi.1");
+    luzi[1]=PropertiesFactory.getPropertie("luzi.2");
+    luzi[2]=PropertiesFactory.getPropertie("luzi.3");
   
-    URL cal1[]=new URL[urlTexts.length];
+    URL cale[]=new URL[urlTexts.length];
     int count=0;
     try {
       for (count=0;count<urlTexts.length;count++) {
-        cal1[count] = new URL(urlTexts[count]);
+        cale[count] = new URL(urlTexts[count]);
       }
     } catch (MalformedURLException e) {
       System.out.println("Failed to generate URL for url["+count+"] urltext:"+urlTexts[count]);
       e.printStackTrace();
+      System.exit(-1);
+    }
+    URL call[]=new URL[urlTexts.length];
+    count=0;
+    try {
+      for (count=0;count<luzi.length;count++) {
+        call[count] = new URL(luzi[count]);
+      }
+    } catch (MalformedURLException e) {
+      System.out.println("Failed to generate URL for url["+count+"] urltext:"+luzi[count]);
+      e.printStackTrace();
+      System.exit(-1);
     }
     Calendar from=getStartDay();
     Calendar to=getStartDay();
     to.add(Calendar.DAY_OF_MONTH,nrOfDays);
-    URL cal[][]=null;
-    try {
-      URL calt[][] = {{new URL(urlTexts[0]),new URL(urlTexts[1]),new URL(urlTexts[2]),new URL(urlTexts[3])}, {new URL(urlTexts[5]),new URL(urlTexts[6]),new URL(urlTexts[4])}};
-      cal=calt;
-    }catch(Exception e){
-      e.printStackTrace();
-    }
     
     provider=new MultiCalendarProvider[2];
-    provider[0]=new MultiCalendarProvider(from,to,cal[0]);
-    provider[1]=new MultiCalendarProvider(from,to,cal[1]);
+    provider[0]=new MultiCalendarProvider(from,to,cale);
+    provider[1]=new MultiCalendarProvider(from,to,call);
     
     for (CalendarProvider m:provider) {
       Thread th = new Thread(m);
@@ -130,18 +139,32 @@ public class CalendarControllerEmpty  {
     
     Calendar currentDate=Calendar.getInstance();
     AnimationTimer timer = new AnimationTimer() {
+      long lastcheck=0;
+      int nrtimes=0;
       @Override
       public void handle(long now) {
-        checkDay();
-        ArrayList<List<CalendarEvent>> evv=new ArrayList<>();
-        for(CalendarProvider p : provider){
-          evv.add(p.getEvents());
+        if(now-lastcheck>10000000000l) {
+          lastcheck=now;
+          checkDay();
+          ArrayList<List<CalendarEvent>> evv = new ArrayList<>();
+          for (CalendarProvider p : provider) {
+            evv.add(p.getEvents());
+          }
+          List<CalendarEvent>[] allev = new List[evv.size()];
+          for (int count = 0; count < evv.size(); count++) {
+            allev[count] = evv.get(count);
+          }
+          if(nrtimes<10) {
+            checkAndDraw(allev);
+            System.out.println("updated");
+            nrtimes++;
+          }else {
+            draw(allev);
+            System.out.println("force updated");
+            nrtimes=0;
+          }
+  
         }
-        List<CalendarEvent>[] allev=new List[evv.size()];
-        for (int count=0;count<evv.size();count++){
-          allev[count]=evv.get(count);
-        }
-          checkAndDraw(allev);
       }
       
       private void checkDay(){

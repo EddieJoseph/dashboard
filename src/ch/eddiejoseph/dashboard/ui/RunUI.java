@@ -2,6 +2,7 @@ package ch.eddiejoseph.dashboard.ui;
 
 import ch.eddiejoseph.dashboard.dataloader.calendar.PropertiesFactory;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -25,9 +26,21 @@ public class RunUI extends Application {
     primaryStage.setWidth(Integer.parseInt(PropertiesFactory.getPropertie("width")));
     primaryStage.setResizable(false);
     primaryStage.setAlwaysOnTop(true);
+    
     initRunUI();
     
     this.primaryStage.show();
+    Platform.runLater(new Runnable(){
+      public void run(){
+        primaryStage.requestFocus();
+        primaryStage.setIconified(true);
+        primaryStage.setIconified(false);
+        
+      }
+    }
+    );
+    
+    
   }
   
   public Scene getScene(){
