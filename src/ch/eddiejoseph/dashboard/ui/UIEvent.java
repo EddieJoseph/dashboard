@@ -35,6 +35,15 @@ public class UIEvent {
     //resize(p.getHeight()-50,p.getWidth());
     resize(Integer.parseInt(PropertiesFactory.getPropertie("height"))-50,p.getWidth());
   }
+  public UIEvent(CalendarEvent e, AnchorPane p,int index, int nrOfCals){
+    this(e);
+    event=e;
+    upperPane=p;
+    //resize(p.getHeight()-50,p.getWidth());
+    resize(Integer.parseInt(PropertiesFactory.getPropertie("height"))-85,p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
+  }
+  
+
   
   public void resizeh(double maxHeight){
     resize(maxHeight,upperPane.getWidth());
@@ -45,9 +54,13 @@ public class UIEvent {
   }
   
   private void resize(double height, double width){
+    resize(height,width,0);
+  }
+  
+  private void resize(double height, double width,double wofset){
     double minPx=height/(24*60);
     root.setPrefSize(width-2*SHRINK,minPx* TimeUnit.MILLISECONDS.toMinutes(event.getEndDate().getTimeInMillis()-event.getStartDate().getTimeInMillis())-2*SHRINK);
-    root.relocate(SHRINK,SHRINK+minPx*(event.getStartDate().get(Calendar.HOUR_OF_DAY)*60+event.getStartDate().get(Calendar.MINUTE)));
+    root.relocate(wofset+SHRINK,SHRINK+minPx*((event.getStartDate().get(Calendar.HOUR_OF_DAY))*60+event.getStartDate().get(Calendar.MINUTE)));
   }
   
   @Deprecated

@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Vector;
 
 public class CalendarControllerEmpty  {
  @FXML
@@ -46,7 +47,7 @@ public class CalendarControllerEmpty  {
     
   }
   
-  private CalendarProvider provider;
+  private CalendarProvider[] provider;
   
   public static final int nrOfDays=5;
   
@@ -109,27 +110,48 @@ public class CalendarControllerEmpty  {
     Calendar from=getStartDay();
     Calendar to=getStartDay();
     to.add(Calendar.DAY_OF_MONTH,nrOfDays);
-    provider=new MultiCalendarProvider(from,to,cal1);
-    Thread th = new Thread(provider);
-    th.setDaemon(true);
-    th.start();
+    URL cal[][]=null;
+    try {
+      URL calt[][] = {{new URL(urlTexts[0]),new URL(urlTexts[1]),new URL(urlTexts[2]),new URL(urlTexts[3])}, {new URL(urlTexts[5]),new URL(urlTexts[6]),new URL(urlTexts[4])}};
+      cal=calt;
+    }catch(Exception e){
+      e.printStackTrace();
+    }
+    
+    provider=new MultiCalendarProvider[2];
+    provider[0]=new MultiCalendarProvider(from,to,cal[0]);
+    provider[1]=new MultiCalendarProvider(from,to,cal[1]);
+    
+    for (CalendarProvider m:provider) {
+      Thread th = new Thread(m);
+      th.setDaemon(true);
+      th.start();
+    }
     
     Calendar currentDate=Calendar.getInstance();
     AnimationTimer timer = new AnimationTimer() {
       @Override
       public void handle(long now) {
         checkDay();
-          checkAndDraw(provider.getEvents());
+        ArrayList<List<CalendarEvent>> evv=new ArrayList<>();
+        for(CalendarProvider p : provider){
+          evv.add(p.getEvents());
+        }
+        List<CalendarEvent>[] allev=new List[evv.size()];
+        for (int count=0;count<evv.size();count++){
+          allev[count]=evv.get(count);
+        }
+          checkAndDraw(allev);
       }
       
       private void checkDay(){
-        Calendar c=provider.getTo();
+        Calendar c=provider[0].getTo();
         Calendar from=getStartDay();
         if(from.get(Calendar.YEAR)==c.get(Calendar.YEAR)&&from.get(Calendar.MONTH)==c.get(Calendar.MONTH)&&from.get(Calendar.DAY_OF_MONTH)==c.get(Calendar.DAY_OF_MONTH)){
-          provider.setFrom(from);
+          provider[0].setFrom(from);
           Calendar to=getStartDay();
           to.add(Calendar.DAY_OF_MONTH,nrOfDays);
-          provider.setTo(to);
+          provider[0].setTo(to);
         }
       }
       
@@ -172,46 +194,77 @@ public class CalendarControllerEmpty  {
   }
   
   
-  private String prev="";
-  private boolean hasChanged(List<CalendarEvent> events){
-    StringBuilder sb = new StringBuilder();
-    for (CalendarEvent e:events){
-      sb.append(e.toString());
+  //private String prev="";
+  //private boolean hasChanged(List<CalendarEvent> events){
+  //  StringBuilder sb = new StringBuilder();
+  //  for (CalendarEvent e:events){
+  //    sb.append(e.toString());
+  //  }
+  //  String tmp=sb.toString();
+  //  if(!tmp.equals(prev)){
+  //    prev=tmp;
+  //    return true;
+  //  }
+  //  return false;
+  //}
+  String[]pr={};
+  private boolean hasChanged(List<CalendarEvent>[] events){
+    String[]tmpprev=new String[events.length];
+    for(int counter=0;counter <events.length;counter++){
+      StringBuilder sb = new StringBuilder();
+      for (CalendarEvent e:events[counter]){
+        sb.append(e.toString());
+      }
+      tmpprev[counter]=sb.toString();
     }
-    String tmp=sb.toString();
-    if(!tmp.equals(prev)){
-      prev=tmp;
+    if(tmpprev.length!=pr.length){
+      pr=tmpprev;
       return true;
+    }
+    
+    for(int counter=0;counter<tmpprev.length;counter++){
+      if(!tmpprev[counter].equals(pr[counter])){
+        pr=tmpprev;
+        return true;
+      }
     }
     return false;
   }
   
-  public void checkAndDraw(List<CalendarEvent> events){
+  //public void checkAndDraw(List<CalendarEvent> events){
+  //  if(hasChanged(events)) {
+  //    draw(events);
+  //  }
+  //}
+  
+  public void checkAndDraw(List<CalendarEvent>[] events){
     if(hasChanged(events)) {
       draw(events);
     }
   }
 
-  public void draw(List<CalendarEvent> events){
-    
-    
-    
-      List<CalendarEvent>[] eventsSorted = sortDay(events);
-      uievents.clear();
+  public void draw(List<CalendarEvent>[] events){
+  
+    uievents.clear();
+    for (int c = 0; c < nrOfDays; c++) {
+      Calendar titleDate = getStartDay();
+      titleDate.add(Calendar.DAY_OF_MONTH, c);
+      days[c].setTitle(Utils.nameOfDay(titleDate.get(Calendar.DAY_OF_WEEK)) + "\n" + titleDate.get(Calendar.DAY_OF_MONTH) + " " + (titleDate.get(Calendar.MONTH) + 1) + " " + titleDate.get(Calendar.YEAR));
+      days[c].getEventPane().getChildren().clear();
+    }
+    for(int counter=0;counter<events.length;counter++) {
+      List<CalendarEvent>[] eventsSorted = sortDay(events[counter]);
+      
       for (int c = 0; c < nrOfDays; c++) {
-        Calendar titleDate=getStartDay();
-        titleDate.add(Calendar.DAY_OF_MONTH,c);
-        days[c].setTitle(Utils.nameOfDay(titleDate.get(Calendar.DAY_OF_WEEK))+"\n"+titleDate.get(Calendar.DAY_OF_MONTH)+" "+(titleDate.get(Calendar.MONTH)+1)+" "+titleDate.get(Calendar.YEAR));
-        days[c].getEventPane().getChildren().clear();
-        //double r = 0;
         for (CalendarEvent e : eventsSorted[c]) {
-          UIEvent ev=new UIEvent(e, days[c].getEventPane());
+          UIEvent ev = new UIEvent(e, days[c].getEventPane(),counter,events.length);
           uievents.add(ev);
           AnchorPane pane = ev.getRoot();
           days[c].getEventPane().getChildren().add(pane);
-
+  
         }
       }
+    }
 
   }
   
