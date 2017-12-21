@@ -91,6 +91,6 @@
             <Label alignment="CENTER" prefWidth="49.0" styleClass="time" text="23:00" GridPane.rowIndex="23" />
          </children>
       </GridPane>
-      <AnchorPane fx:id="anchor" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane fx:id="anchor" prefHeight="200.0" prefWidth="200.0" styleClass="grid" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

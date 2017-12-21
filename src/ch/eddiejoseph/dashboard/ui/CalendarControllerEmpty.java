@@ -2,6 +2,7 @@ package ch.eddiejoseph.dashboard.ui;
 
 import ch.eddiejoseph.dashboard.dataloader.calendar.CalendarEvent;
 import ch.eddiejoseph.dashboard.dataloader.calendar.PropertiesFactory;
+import ch.eddiejoseph.dashboard.dataloader.calendar.UrlLoader;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.layout.*;
@@ -22,6 +23,9 @@ public class CalendarControllerEmpty  {
   private Day[] days;
   
   private List<CalendarEvent> events;
+  
+  private int bgcolsd [][]=null;
+  private int txcolsd [][]=null;
   
   public void setMainApp(RunUI mainApp) {
     this.mainApp = mainApp;
@@ -49,9 +53,9 @@ public class CalendarControllerEmpty  {
   
   private CalendarProvider[] provider;
   
-  public static final int nrOfDays=5;
+  public static final int nrOfDays=Integer.parseInt(PropertiesFactory.getPropertie("nrOfDays"));
   
-  public static boolean weekstart=false;
+  public static boolean weekstart=Boolean.parseBoolean(PropertiesFactory.getPropertie("weekstart"));
   
   public List<UIEvent> uievents;
   
@@ -72,7 +76,7 @@ public class CalendarControllerEmpty  {
     rc.setVgrow(Priority.ALWAYS);
     grid.getRowConstraints().add(rc);
     
-    grid.getStyleClass().add("hlines");
+    grid.getStyleClass().add("grid");
     for (int c=0;c<nrOfDays;c++){
       ColumnConstraints cc = new ColumnConstraints();
       cc.setFillWidth(true);
@@ -83,67 +87,19 @@ public class CalendarControllerEmpty  {
       grid.add(days[c].getWholeDay(),c,0);
     }
     
-    grid.gridLinesVisibleProperty().setValue(true);
     grid.toFront();
-    
-    
-    String []urlTexts=new String[7];
-    urlTexts[0]= PropertiesFactory.getPropertie("eddie.Privat");
-    urlTexts[1]= PropertiesFactory.getPropertie("eddie.Buisness");
-    urlTexts[2]= PropertiesFactory.getPropertie("eddie.AL");
-    urlTexts[3]= PropertiesFactory.getPropertie("eddie.Basis");
-    urlTexts[4]= PropertiesFactory.getPropertie("eddie.Leitung");
-    urlTexts[5]= PropertiesFactory.getPropertie("eddie.Studium");
-    urlTexts[6]= PropertiesFactory.getPropertie("eddie.Pruefungen");
-    //urlTexts=new String[0];
-    String []luzi=new String[3];
-    luzi[0]=PropertiesFactory.getPropertie("luzi.1");
-    luzi[1]=PropertiesFactory.getPropertie("luzi.2");
-    luzi[2]=PropertiesFactory.getPropertie("luzi.3");
   
-    URL cale[]=new URL[urlTexts.length];
-    int count=0;
-    try {
-      for (count=0;count<urlTexts.length;count++) {
-        cale[count] = new URL(urlTexts[count]);
-      }
-    } catch (MalformedURLException e) {
-      System.out.println("Failed to generate URL for url["+count+"] urltext:"+urlTexts[count]);
-      e.printStackTrace();
-      System.exit(-1);
-    }
-    URL call[]=new URL[urlTexts.length];
-    count=0;
-    try {
-      for (count=0;count<luzi.length;count++) {
-        call[count] = new URL(luzi[count]);
-      }
-    } catch (MalformedURLException e) {
-      System.out.println("Failed to generate URL for url["+count+"] urltext:"+luzi[count]);
-      e.printStackTrace();
-      System.exit(-1);
-    }
-    Calendar from=getStartDay();
-    Calendar to=getStartDay();
-    to.add(Calendar.DAY_OF_MONTH,nrOfDays);
+    startProviders();
+  
+    initColors();
     
-    provider=new MultiCalendarProvider[2];
-    provider[0]=new MultiCalendarProvider(from,to,cale);
-    provider[1]=new MultiCalendarProvider(from,to,call);
-    
-    for (CalendarProvider m:provider) {
-      Thread th = new Thread(m);
-      th.setDaemon(true);
-      th.start();
-    }
-    
-    Calendar currentDate=Calendar.getInstance();
     AnimationTimer timer = new AnimationTimer() {
       long lastcheck=0;
       int nrtimes=0;
+      boolean startup=true;
       @Override
       public void handle(long now) {
-        if(now-lastcheck>10000000000l) {
+        if(now-lastcheck>120000000000l||startup) {
           lastcheck=now;
           checkDay();
           ArrayList<List<CalendarEvent>> evv = new ArrayList<>();
@@ -154,7 +110,7 @@ public class CalendarControllerEmpty  {
           for (int count = 0; count < evv.size(); count++) {
             allev[count] = evv.get(count);
           }
-          if(nrtimes<10) {
+          if(nrtimes<10&&!startup) {
             checkAndDraw(allev);
             System.out.println("updated");
             nrtimes++;
@@ -162,8 +118,14 @@ public class CalendarControllerEmpty  {
             draw(allev);
             System.out.println("force updated");
             nrtimes=0;
+            startup=false;
           }
-  
+        }else{
+          try {
+            Thread.sleep(10);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
         }
       }
       
@@ -171,15 +133,57 @@ public class CalendarControllerEmpty  {
         Calendar c=provider[0].getTo();
         Calendar from=getStartDay();
         if(from.get(Calendar.YEAR)==c.get(Calendar.YEAR)&&from.get(Calendar.MONTH)==c.get(Calendar.MONTH)&&from.get(Calendar.DAY_OF_MONTH)==c.get(Calendar.DAY_OF_MONTH)){
-          provider[0].setFrom(from);
-          Calendar to=getStartDay();
-          to.add(Calendar.DAY_OF_MONTH,nrOfDays);
-          provider[0].setTo(to);
+          for(CalendarProvider p:provider) {
+            p.setFrom(from);
+            Calendar to = getStartDay();
+            to.add(Calendar.DAY_OF_MONTH, nrOfDays);
+            p.setTo(to);
+          }
         }
       }
       
     };
     timer.start();
+  }
+  
+  private void startProviders() {
+    URL[][]cals= UrlLoader.getCalendars();
+    Calendar from=getStartDay();
+    Calendar to=getStartDay();
+    to.add(Calendar.DAY_OF_MONTH,nrOfDays);
+    
+    provider=new MultiCalendarProvider[cals.length];
+    for(int counter=0;counter<cals.length;counter++){
+      provider[counter]=new MultiCalendarProvider(from,to,cals[counter]);
+    }
+    
+    for (CalendarProvider m:provider) {
+      Thread th = new Thread(m);
+      th.setDaemon(true);
+      th.start();
+    }
+  }
+  
+  private void initColors() {
+    int [][] colorshifts= UrlLoader.getColors();
+    double [][] colorsd = new double[colorshifts.length][3];
+    bgcolsd =new int[colorshifts.length][3];
+    txcolsd =new int[colorshifts.length][3];
+    for (int c=0;c<colorshifts.length;c++){
+      double sum =colorshifts[c][0]+colorshifts[c][1]+colorshifts[c][2];
+      sum=255;
+      colorsd[c][0]=colorshifts[c][0]/sum;
+      colorsd[c][1]=colorshifts[c][1]/sum;
+      colorsd[c][2]=colorshifts[c][2]/sum;
+      System.out.println("r: "+colorsd[c][0]+"g: "+colorsd[c][1]+"b: "+colorsd[c][2]);
+      bgcolsd[c][0]=25+(int)(colorsd[c][0]*30.0);
+      bgcolsd[c][1]=25+(int)(colorsd[c][1]*30.0);
+      bgcolsd[c][2]=25+(int)(colorsd[c][2]*30.0);
+      txcolsd[c][0]=100+(int)(colorsd[c][0]*50.0);
+      txcolsd[c][1]=100+(int)(colorsd[c][1]*50.0);
+      txcolsd[c][2]=100+(int)(colorsd[c][2]*50.0);
+      System.out.println("bg r: "+bgcolsd[c][0]+"g: "+bgcolsd[c][1]+"b: "+bgcolsd[c][2]);
+    }
   }
   
   
@@ -267,7 +271,6 @@ public class CalendarControllerEmpty  {
   }
 
   public void draw(List<CalendarEvent>[] events){
-  
     uievents.clear();
     for (int c = 0; c < nrOfDays; c++) {
       Calendar titleDate = getStartDay();
@@ -280,7 +283,7 @@ public class CalendarControllerEmpty  {
       
       for (int c = 0; c < nrOfDays; c++) {
         for (CalendarEvent e : eventsSorted[c]) {
-          UIEvent ev = new UIEvent(e, days[c].getEventPane(),counter,events.length);
+          UIEvent ev = new UIEvent(e, days[c].getEventPane(),counter,events.length,bgcolsd[counter],txcolsd[counter]);
           uievents.add(ev);
           AnchorPane pane = ev.getRoot();
           days[c].getEventPane().getChildren().add(pane);

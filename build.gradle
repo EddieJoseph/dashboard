@@ -8,6 +8,7 @@ repositories{
 dependencies{
 	compile 'com.github.mangstadt:biweekly:0.6.1'
 	compile 'com.github.mangstadt:vinnie:2.0.0'
+	compile 'com.github.dom4j:dom4j:version-2.1.0'
 	//compile 'com.github.FasterXML:jackson-core:jackson-core-2.6.1'
 	testCompile "junit:junit:4.12"
 }

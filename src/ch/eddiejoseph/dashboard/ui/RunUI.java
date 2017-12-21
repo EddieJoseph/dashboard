@@ -22,8 +22,14 @@ public class RunUI extends Application {
     this.primaryStage=primaryStage;
     this.primaryStage.setTitle("Dashboard");
     primaryStage.setFullScreen(Boolean.parseBoolean(PropertiesFactory.getPropertie("fullscreen")));
-    primaryStage.setHeight(Integer.parseInt(PropertiesFactory.getPropertie("height")));
+    if(Boolean.parseBoolean(PropertiesFactory.getPropertie("fullscreen"))) {
+      primaryStage.setHeight(Integer.parseInt(PropertiesFactory.getPropertie("height")));
+    }else{
+      primaryStage.setHeight(Integer.parseInt(PropertiesFactory.getPropertie("height"))+50);
+    }
+  
     primaryStage.setWidth(Integer.parseInt(PropertiesFactory.getPropertie("width")));
+    
     primaryStage.setResizable(false);
     primaryStage.setAlwaysOnTop(true);
     

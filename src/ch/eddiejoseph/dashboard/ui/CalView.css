@@ -2,15 +2,30 @@
     -fx-background-color: rgba(0,0,0,0.0) ;
 }
 .hlines{
+    -fx-grid-lines-visible: false;
+
+    -fx-stroke: #bd0dbc;/*Nothing should be lines*/
+}
+
+.grid{
     -fx-grid-lines-visible: true;
+/*-fx-background-color: #0dfa2c;*/
+    -fx-stroke: #bd0dbc;/*Nothing should be lines*/
+
 }
 
 .secline{
-    -fx-background-color: #514931;
+    -fx-background-color: #2d2d2d; /*bg light*/
 }
 .beline{
-    -fx-background-color: #675e3c;
+    -fx-background-color: #0f0f0f; /*bg dark includes title*/
 }
+
+.day{
+    /*-fx-border-color: #5b5b5b;
+    -fx-border-width: 2;*/
+}
+
 
 .cell {
     /* 1 pixel border around the left and bottom of each cell: */
@@ -21,22 +36,31 @@
     -fx-font-size: 16px;
     -fx-font-weight: bold;
     -fx-lines-spacing:0em;
+    /*-fx-stroke: #000000;
+    -fx-stroke-width: 1;*/
+    -fx-text-fill: #928f8f;
+
 
 }
 
 .time{
     -fx-font-size: 14px;
     -fx-font-weight: bold;
+    /*-fx-stroke: #000000;*/
+    -fx-text-fill: #928a8b;
 }
 
 .backgroundEvent {
-    -fx-background-color: #9c979b;
+    -fx-background-color: rgba(57, 56, 13, 0.5);/* Event bg*/
     -fx-border-radius: 5 5 5 5;
     -fx-background-radius: 5 5 5 5;
-    -fx-border-color: black;
+
+    -fx-border-color: #000000;/*event border*/
     -fx-border-width: 1px;
 }
 .titleEvent{
-    -fx-font-size: 11px;
+    -fx-font-size: 12px;
     -fx-font-weight: bold;
+    /*-fx-stroke: #000000;*/
+    -fx-text-fill: rgba(161, 141, 98, 1.0);
 }
