@@ -170,11 +170,9 @@ public class CalendarControllerEmpty  {
     bgcolsd =new int[colorshifts.length][3];
     txcolsd =new int[colorshifts.length][3];
     for (int c=0;c<colorshifts.length;c++){
-      double sum =colorshifts[c][0]+colorshifts[c][1]+colorshifts[c][2];
-      sum=255;
-      colorsd[c][0]=colorshifts[c][0]/sum;
-      colorsd[c][1]=colorshifts[c][1]/sum;
-      colorsd[c][2]=colorshifts[c][2]/sum;
+      colorsd[c][0]=colorshifts[c][0]/255.0;
+      colorsd[c][1]=colorshifts[c][1]/255.0;
+      colorsd[c][2]=colorshifts[c][2]/255.0;
       System.out.println("r: "+colorsd[c][0]+"g: "+colorsd[c][1]+"b: "+colorsd[c][2]);
       bgcolsd[c][0]=25+(int)(colorsd[c][0]*30.0);
       bgcolsd[c][1]=25+(int)(colorsd[c][1]*30.0);
@@ -220,20 +218,6 @@ public class CalendarControllerEmpty  {
     
   }
   
-  
-  //private String prev="";
-  //private boolean hasChanged(List<CalendarEvent> events){
-  //  StringBuilder sb = new StringBuilder();
-  //  for (CalendarEvent e:events){
-  //    sb.append(e.toString());
-  //  }
-  //  String tmp=sb.toString();
-  //  if(!tmp.equals(prev)){
-  //    prev=tmp;
-  //    return true;
-  //  }
-  //  return false;
-  //}
   String[]pr={};
   private boolean hasChanged(List<CalendarEvent>[] events){
     String[]tmpprev=new String[events.length];
@@ -258,11 +242,6 @@ public class CalendarControllerEmpty  {
     return false;
   }
   
-  //public void checkAndDraw(List<CalendarEvent> events){
-  //  if(hasChanged(events)) {
-  //    draw(events);
-  //  }
-  //}
   
   public void checkAndDraw(List<CalendarEvent>[] events){
     if(hasChanged(events)) {
