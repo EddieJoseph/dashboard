@@ -6,6 +6,10 @@ import ch.eddiejoseph.dashboard.dataloader.calendar.UrlLoader;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -38,12 +42,23 @@ public class CalendarControllerEmpty  {
   
   public List<UIEvent> uievents;
   
+  private Line timeline;
+  
+  private Circle timecircle;
+  
   @FXML
   private void initialize(){
     days = new Day[nrOfDays];
     uievents=new ArrayList<>();
     GridPane grid=new GridPane();
     anchor.getChildren().add(grid);
+    timeline=new Line(0,100,anchor.getWidth(),100);
+    timeline.setStroke(Color.RED);
+    timecircle=new Circle(0,100,3.0);
+    timecircle.setStroke(Color.RED);
+    timecircle.setFill(Color.RED);
+    anchor.getChildren().add(timeline);
+    anchor.getChildren().add(timecircle);
     int gridIndex = anchor.getChildren().indexOf(grid);
     anchor.setBottomAnchor(grid,0.0);
     anchor.setTopAnchor(grid,0.0);
@@ -102,13 +117,14 @@ public class CalendarControllerEmpty  {
       }
       
       private void checkDay(){
-        Calendar c=provider[0].getTo();
+        Calendar c=provider[0].getFrom();
         Calendar from=getStartDay();
-        if(from.get(Calendar.YEAR)==c.get(Calendar.YEAR)&&from.get(Calendar.MONTH)==c.get(Calendar.MONTH)&&from.get(Calendar.DAY_OF_MONTH)==c.get(Calendar.DAY_OF_MONTH)){
+        if(!(from.get(Calendar.YEAR)==c.get(Calendar.YEAR)&&from.get(Calendar.MONTH)==c.get(Calendar.MONTH)&&from.get(Calendar.DAY_OF_MONTH)==c.get(Calendar.DAY_OF_MONTH))){
+          Calendar to = getStartDay();
+          to.add(Calendar.DAY_OF_MONTH, nrOfDays);
+          System.out.println(getDateString()+" changing daterange.   from: "+from+"   to: "+to);
           for(CalendarProvider p:provider) {
             p.setFrom(from);
-            Calendar to = getStartDay();
-            to.add(Calendar.DAY_OF_MONTH, nrOfDays);
             p.setTo(to);
           }
         }
@@ -249,5 +265,23 @@ public class CalendarControllerEmpty  {
         }
       }
     }
+    Calendar currcal=Calendar.getInstance();
+  
+    double yOffset;
+    if(Boolean.parseBoolean(PropertiesFactory.getPropertie("fullscreen"))) {
+      yOffset = (anchor.getHeight() - 100.0) * (currcal.get(Calendar.HOUR_OF_DAY) * 60.0 + currcal.get(Calendar.MINUTE)) / (60.0 * 24.0);
+    }else {
+      yOffset = (anchor.getHeight() - 100.0-41) * (currcal.get(Calendar.HOUR_OF_DAY) * 60.0 + currcal.get(Calendar.MINUTE)) / (60.0 * 24.0);
+    }
+    
+    
+    
+    
+    timeline.setStartY(100 + yOffset);
+    timeline.setEndY(100 + yOffset);
+    timeline.setEndX(anchor.getWidth());
+    timecircle.setCenterY(100 + yOffset);
+    timeline.toFront();
+    timecircle.toFront();
   }
 }
