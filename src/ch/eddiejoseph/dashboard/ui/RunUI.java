@@ -27,26 +27,19 @@ public class RunUI extends Application {
     }else{
       primaryStage.setHeight(Integer.parseInt(PropertiesFactory.getPropertie("height"))+50);
     }
-  
     primaryStage.setWidth(Integer.parseInt(PropertiesFactory.getPropertie("width")));
-    
     primaryStage.setResizable(false);
     primaryStage.setAlwaysOnTop(true);
-    
     initRunUI();
-    
     this.primaryStage.show();
     Platform.runLater(new Runnable(){
       public void run(){
         primaryStage.requestFocus();
         primaryStage.setIconified(true);
         primaryStage.setIconified(false);
-        
       }
     }
     );
-    
-    
   }
   
   public Scene getScene(){
@@ -65,22 +58,6 @@ public class RunUI extends Application {
       primaryStage.show();
       CalendarControllerEmpty controller = loader.getController();
       controller.setMainApp(this);
-      //primaryStage.setScene(scene);
-      //primaryStage.show();
-    }catch (Exception e){
-      e.printStackTrace();
-    }
-  }
-  
-  public void showDays(){
-    try {
-      FXMLLoader loader = new FXMLLoader();
-      loader.setLocation(RunUI.class.getResource("UIEvent.fxml"));
-      Canvas day = (Canvas) loader.load();
-      for(int c=0;c<7;c++) {
-        System.out.println(rootLayout.getChildren().get(0));
-        ((GridPane) rootLayout.getChildren().get(0)).add(day, c, 0);
-      }
     }catch (Exception e){
       e.printStackTrace();
     }

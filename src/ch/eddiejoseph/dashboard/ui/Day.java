@@ -21,7 +21,6 @@ public class Day {
   public Day(String title){
     FXMLLoader loader=new FXMLLoader(getClass().getResource("Day.fxml"));
     loader.setController(this);
-    //loader.setRoot(this);
     try{
       loader.load();
     }catch(IOException e){

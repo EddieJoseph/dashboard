@@ -28,66 +28,28 @@ public class UIEvent {
     this.title.setText(title);
   }
   
-  
-  //public UIEvent(CalendarEvent e, AnchorPane p){
-  //  this(e);
-  //  event=e;
-  //  upperPane=p;
-  //  //resize(p.getHeight()-50,p.getWidth());
-  //  resize(Integer.parseInt(PropertiesFactory.getPropertie("height"))-85,p.getWidth());
-  //}
   public UIEvent(CalendarEvent e, AnchorPane p,int index, int nrOfCals){
     this(e);
     event=e;
     upperPane=p;
-    //resize(p.getHeight()-50,p.getWidth());
     if(Boolean.parseBoolean(PropertiesFactory.getPropertie("fullscreen"))) {
       resize(p.getHeight(),p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
     }else{
       resize(p.getHeight()-41,p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
     }
-  
-  
-    //root.setStyle("-fx-background-color: rgba(57, 56, 13, 1);");
-    //title.setStyle("-fx-text-fill: rgba(161, 141, 98, 0.5);");
-  
-  
-  
-  
   }
   public UIEvent(CalendarEvent e, AnchorPane p,int index, int nrOfCals,int[] bgcol,int textcol[]){
     this(e);
     event=e;
     upperPane=p;
-    //resize(p.getHeight()-50,p.getWidth());
     if(Boolean.parseBoolean(PropertiesFactory.getPropertie("fullscreen"))) {
       resize(p.getHeight(),p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
     }else{
       resize(p.getHeight()-41,p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
     }
-    
-    
     root.setStyle("-fx-background-color: rgba("+bgcol[0]+", "+bgcol[1]+", "+bgcol[2]+", 0.7);");
     title.setStyle("-fx-text-fill: rgba("+textcol[0]+", "+textcol[1]+", "+textcol[2]+", 1);");
-    
-    
-    
-    
   }
-  
-
-  
-  //public void resizeh(double maxHeight){
-  //  resize(maxHeight,upperPane.getWidth());
-  //}
-  //public void resizew(double width){
-  //  System.out.println(upperPane.getHeight());
-  //  resize(upperPane.getHeight(),width);
-  //}
-  //
-  //private void resize(double height, double width){
-  //  resize(height,width,0);
-  //}
   
   private void resize(double height, double width,double wofset){
     double minPx=height/(24*60);
@@ -95,8 +57,6 @@ public class UIEvent {
     if(dh>height){
       dh=height;
     }
-    System.out.println(dh);
-
     root.setPrefSize(width-2*SHRINK,dh);
     root.relocate(wofset+SHRINK,minPx*((event.getStartDate().get(Calendar.HOUR_OF_DAY))*60+event.getStartDate().get(Calendar.MINUTE)));
   }

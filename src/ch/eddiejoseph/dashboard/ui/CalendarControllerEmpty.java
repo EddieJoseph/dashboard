@@ -9,10 +9,9 @@ import javafx.scene.layout.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Vector;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class CalendarControllerEmpty  {
  @FXML
@@ -50,29 +49,22 @@ public class CalendarControllerEmpty  {
     anchor.setTopAnchor(grid,0.0);
     anchor.setLeftAnchor(grid,0.0);
     anchor.setRightAnchor(grid,0.0);
-    
     RowConstraints rc = new RowConstraints();
     rc.setFillHeight(true);
     rc.setVgrow(Priority.ALWAYS);
     grid.getRowConstraints().add(rc);
-    
     grid.getStyleClass().add("grid");
     for (int c=0;c<nrOfDays;c++){
       ColumnConstraints cc = new ColumnConstraints();
       cc.setFillWidth(true);
-      //cc.setHgrow(Priority.ALLWAYS);
       cc.setPercentWidth(100.0/(double)nrOfDays);
       grid.getColumnConstraints().add(cc);
       days[c]=new Day(Integer.toString(c));
       grid.add(days[c].getWholeDay(),c,0);
     }
-    
     grid.toFront();
-  
     startProviders();
-  
     initColors();
-    
     AnimationTimer timer = new AnimationTimer() {
       long lastcheck=0;
       int nrtimes=0;
@@ -92,11 +84,11 @@ public class CalendarControllerEmpty  {
           }
           if(nrtimes<10&&!startup) {
             checkAndDraw(allev);
-            System.out.println("updated");
+            
             nrtimes++;
           }else {
             draw(allev);
-            System.out.println("force updated");
+            System.out.println(getDateString()+" force updated");
             nrtimes=0;
             startup=false;
           }
@@ -121,9 +113,15 @@ public class CalendarControllerEmpty  {
           }
         }
       }
-      
     };
     timer.start();
+  }
+  
+  private String getDateString(){
+    Date date = new Date();
+    date.setTime(date.getTime());
+    DateFormat form = new SimpleDateFormat("MMM dd, yyyy KK:mm:ss aa");
+    return form.format(date);
   }
   
   private void startProviders() {
@@ -131,7 +129,6 @@ public class CalendarControllerEmpty  {
     Calendar from=getStartDay();
     Calendar to=getStartDay();
     to.add(Calendar.DAY_OF_MONTH,nrOfDays);
-    
     provider=new MultiCalendarProvider[cals.length];
     for(int counter=0;counter<cals.length;counter++){
       provider[counter]=new MultiCalendarProvider(from,to,cals[counter]);
@@ -153,7 +150,6 @@ public class CalendarControllerEmpty  {
       colorsd[c][0]=colorshifts[c][0]/255.0;
       colorsd[c][1]=colorshifts[c][1]/255.0;
       colorsd[c][2]=colorshifts[c][2]/255.0;
-      //System.out.println("r: "+colorsd[c][0]+"g: "+colorsd[c][1]+"b: "+colorsd[c][2]);
       int baseb=25;
       double factb=50;
       bgcolsd[c][0]=baseb+(int)(colorsd[c][0]*factb);
@@ -164,7 +160,6 @@ public class CalendarControllerEmpty  {
       txcolsd[c][0]=baset+(int)(colorsd[c][0]*factt);
       txcolsd[c][1]=baset+(int)(colorsd[c][1]*factt);
       txcolsd[c][2]=baset+(int)(colorsd[c][2]*factt);
-      //System.out.println("bg r: "+bgcolsd[c][0]+"g: "+bgcolsd[c][1]+"b: "+bgcolsd[c][2]);
     }
   }
   
@@ -230,6 +225,7 @@ public class CalendarControllerEmpty  {
   public void checkAndDraw(List<CalendarEvent>[] events){
     if(hasChanged(events)) {
       draw(events);
+      System.out.println(getDateString()+" updated");
     }
   }
 
@@ -243,18 +239,14 @@ public class CalendarControllerEmpty  {
     }
     for(int counter=0;counter<events.length;counter++) {
       List<CalendarEvent>[] eventsSorted = sortDay(events[counter]);
-      
       for (int c = 0; c < nrOfDays; c++) {
         for (CalendarEvent e : eventsSorted[c]) {
           UIEvent ev = new UIEvent(e, days[c].getEventPane(),counter,events.length,bgcolsd[counter],txcolsd[counter]);
           uievents.add(ev);
           AnchorPane pane = ev.getRoot();
           days[c].getEventPane().getChildren().add(pane);
-  
         }
       }
     }
-
   }
-  
 }
