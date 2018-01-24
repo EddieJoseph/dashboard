@@ -36,9 +36,9 @@ public class UIEvent {
     
     
     if(Boolean.parseBoolean(PropertiesFactory.getPropertie("fullscreen"))) {
-      resize(p.getHeight()-90,p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
+      resize(p.getHeight()-50,p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
     }else{
-      resize(p.getHeight()-41-90,p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
+      resize(p.getHeight()-41-50,p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
     }
     root.setStyle("-fx-background-color: rgba("+bgcol[0]+", "+bgcol[1]+", "+bgcol[2]+", 0.7);");
     title.setStyle("-fx-text-fill: rgba("+textcol[0]+", "+textcol[1]+", "+textcol[2]+", 1);");
@@ -65,7 +65,7 @@ public class UIEvent {
         dh = height;
       }
       root.setPrefSize(width - 2 * SHRINK, dh);
-      root.relocate(wofset + SHRINK, 60 + minPx * ((event.getStartDate().get(Calendar.HOUR_OF_DAY)) * 60 + event.getStartDate().get(Calendar.MINUTE)));
+      root.relocate(wofset + SHRINK, 50 + minPx * ((event.getStartDate().get(Calendar.HOUR_OF_DAY)) * 60 + event.getStartDate().get(Calendar.MINUTE)));
     }else {
       root.setPrefSize(width - 2 * SHRINK, 25);
       root.relocate(wofset + SHRINK, 0+25*fullDayCount);
