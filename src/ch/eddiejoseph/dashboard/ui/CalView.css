@@ -15,10 +15,10 @@
 }
 
 .secline{
-    -fx-background-color: #2d2d2d; /*bg light*/
+    -fx-background-color: #191919; /*bg light*/
 }
 .beline{
-    -fx-background-color: #0f0f0f; /*bg dark includes title*/
+    -fx-background-color: #000000; /*bg dark includes title*/
 }
 
 .day{
@@ -38,7 +38,7 @@
     -fx-lines-spacing:0em;
     /*-fx-stroke: #000000;
     -fx-stroke-width: 1;*/
-    -fx-text-fill: #928f8f;
+    -fx-text-fill: #606060;
 
 
 }
@@ -47,7 +47,7 @@
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     /*-fx-stroke: #000000;*/
-    -fx-text-fill: #928a8b;
+    -fx-text-fill: #606060;
 }
 
 .backgroundEvent {

@@ -11,7 +11,7 @@ public class Utils {
   }
   
   public static boolean between(Date start, Date end,Date from,Date to){
-    return start.after(from)&&start.before(to)||end.after(from)&&end.before(to);
+    return start.after(from)&&start.before(to)||end.after(from)&&end.before(to)||start.before(from)&&end.after(to);
   }
   
   public static String zeroLead(int min){

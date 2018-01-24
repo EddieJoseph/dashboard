@@ -29,26 +29,6 @@ public class CalendarControllerEmpty  {
   
   public void setMainApp(RunUI mainApp) {
     this.mainApp = mainApp;
-    //mainApp.scene.heightProperty().addListener((observable, oldValue, newValue) -> {
-    //  for(UIEvent e:uievents){
-    //    for(Day d:days) {
-    //      d.getEventPane().setPrefWidth((newValue.doubleValue() - 50) / nrOfDays);
-    //      d.getEventPane().setMaxWidth((newValue.doubleValue() - 50) / nrOfDays);
-    //    }
-    //    e.resizeh(newValue.doubleValue()-50);
-    //  }
-    //});
-    //mainApp.scene.widthProperty().addListener((observable, oldValue, newValue) -> {
-    //  for(UIEvent e:uievents){
-    //
-    //    for(Day d:days) {
-    //      d.getEventPane().setPrefHeight((newValue.doubleValue() - 50));
-    //      d.getEventPane().setMaxHeight((newValue.doubleValue() - 50));
-    //    }
-    //    e.resizew((newValue.doubleValue()-50)/nrOfDays);
-    //  }
-    //});
-    
   }
   
   private CalendarProvider[] provider;
@@ -173,14 +153,18 @@ public class CalendarControllerEmpty  {
       colorsd[c][0]=colorshifts[c][0]/255.0;
       colorsd[c][1]=colorshifts[c][1]/255.0;
       colorsd[c][2]=colorshifts[c][2]/255.0;
-      System.out.println("r: "+colorsd[c][0]+"g: "+colorsd[c][1]+"b: "+colorsd[c][2]);
-      bgcolsd[c][0]=25+(int)(colorsd[c][0]*30.0);
-      bgcolsd[c][1]=25+(int)(colorsd[c][1]*30.0);
-      bgcolsd[c][2]=25+(int)(colorsd[c][2]*30.0);
-      txcolsd[c][0]=100+(int)(colorsd[c][0]*50.0);
-      txcolsd[c][1]=100+(int)(colorsd[c][1]*50.0);
-      txcolsd[c][2]=100+(int)(colorsd[c][2]*50.0);
-      System.out.println("bg r: "+bgcolsd[c][0]+"g: "+bgcolsd[c][1]+"b: "+bgcolsd[c][2]);
+      //System.out.println("r: "+colorsd[c][0]+"g: "+colorsd[c][1]+"b: "+colorsd[c][2]);
+      int baseb=25;
+      double factb=50;
+      bgcolsd[c][0]=baseb+(int)(colorsd[c][0]*factb);
+      bgcolsd[c][1]=baseb+(int)(colorsd[c][1]*factb);
+      bgcolsd[c][2]=baseb+(int)(colorsd[c][2]*factb);
+      int baset=80;
+      double factt=70;
+      txcolsd[c][0]=baset+(int)(colorsd[c][0]*factt);
+      txcolsd[c][1]=baset+(int)(colorsd[c][1]*factt);
+      txcolsd[c][2]=baset+(int)(colorsd[c][2]*factt);
+      //System.out.println("bg r: "+bgcolsd[c][0]+"g: "+bgcolsd[c][1]+"b: "+bgcolsd[c][2]);
     }
   }
   

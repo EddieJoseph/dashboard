@@ -2,6 +2,9 @@ package ch.eddiejoseph.dashboard.ui;
 
 import ch.eddiejoseph.dashboard.dataloader.calendar.CalendarEvent;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,7 +17,19 @@ public class MultiCalendarProvider extends CalendarProvider {
     singleProviders=new ArrayList<>();
     for(URL url : urls){
       if(url!=null) {
-        singleProviders.add(new SingleCalendarProvider(url, from, to));
+        try {
+          HttpURLConnection testconn = (HttpURLConnection) url.openConnection();
+          testconn.setRequestMethod("GET");
+          testconn.connect();
+          if(testconn.getResponseCode()>=400) {
+            System.out.println("could not connect to "+url.toString()+" Error: "+testconn.getResponseCode() +" "+ testconn.getResponseMessage());
+          }else {
+            singleProviders.add(new SingleCalendarProvider(url, from, to));
+          }
+        }catch(IOException e){
+          e.printStackTrace();
+        }
+        
       }
     }
     setFrom(from);
