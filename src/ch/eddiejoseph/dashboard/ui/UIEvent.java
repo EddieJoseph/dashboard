@@ -28,37 +28,49 @@ public class UIEvent {
     this.title.setText(title);
   }
   
-  public UIEvent(CalendarEvent e, AnchorPane p,int index, int nrOfCals){
-    this(e);
-    event=e;
-    upperPane=p;
-    if(Boolean.parseBoolean(PropertiesFactory.getPropertie("fullscreen"))) {
-      resize(p.getHeight(),p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
-    }else{
-      resize(p.getHeight()-41,p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
-    }
-  }
   public UIEvent(CalendarEvent e, AnchorPane p,int index, int nrOfCals,int[] bgcol,int textcol[]){
     this(e);
     event=e;
     upperPane=p;
+    
+    
+    
     if(Boolean.parseBoolean(PropertiesFactory.getPropertie("fullscreen"))) {
-      resize(p.getHeight(),p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
+      resize(p.getHeight()-90,p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
     }else{
-      resize(p.getHeight()-41,p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
+      resize(p.getHeight()-41-90,p.getWidth()/nrOfCals,p.getWidth()/nrOfCals*index);
     }
     root.setStyle("-fx-background-color: rgba("+bgcol[0]+", "+bgcol[1]+", "+bgcol[2]+", 0.7);");
     title.setStyle("-fx-text-fill: rgba("+textcol[0]+", "+textcol[1]+", "+textcol[2]+", 1);");
   }
   
-  private void resize(double height, double width,double wofset){
-    double minPx=height/(24*60);
-    double dh=minPx* TimeUnit.MILLISECONDS.toMinutes(event.getEndDate().getTimeInMillis()-event.getStartDate().getTimeInMillis());
-    if(dh>height){
-      dh=height;
+  private boolean wholeDay(){
+    if(TimeUnit.MILLISECONDS.toMinutes(event.getEndDate().getTimeInMillis()-event.getStartDate().getTimeInMillis())>=1439){
+      return true;
     }
-    root.setPrefSize(width-2*SHRINK,dh);
-    root.relocate(wofset+SHRINK,minPx*((event.getStartDate().get(Calendar.HOUR_OF_DAY))*60+event.getStartDate().get(Calendar.MINUTE)));
+    return false;
+  }
+  
+  private static int fullDayCount=0;
+  
+  protected static void resetFullDayCount(){
+    fullDayCount=0;
+  }
+  
+  private void resize(double height, double width,double wofset){
+    if(!wholeDay()) {
+      double minPx = height / (24 * 60);
+      double dh = minPx * TimeUnit.MILLISECONDS.toMinutes(event.getEndDate().getTimeInMillis() - event.getStartDate().getTimeInMillis());
+      if (dh > height) {
+        dh = height;
+      }
+      root.setPrefSize(width - 2 * SHRINK, dh);
+      root.relocate(wofset + SHRINK, 60 + minPx * ((event.getStartDate().get(Calendar.HOUR_OF_DAY)) * 60 + event.getStartDate().get(Calendar.MINUTE)));
+    }else {
+      root.setPrefSize(width - 2 * SHRINK, 25);
+      root.relocate(wofset + SHRINK, 0+25*fullDayCount);
+      fullDayCount++;
+    }
   }
   
   @Deprecated

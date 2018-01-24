@@ -240,6 +240,7 @@ public class CalendarControllerEmpty  {
     for(int counter=0;counter<events.length;counter++) {
       List<CalendarEvent>[] eventsSorted = sortDay(events[counter]);
       for (int c = 0; c < nrOfDays; c++) {
+        UIEvent.resetFullDayCount();
         for (CalendarEvent e : eventsSorted[c]) {
           UIEvent ev = new UIEvent(e, days[c].getEventPane(),counter,events.length,bgcolsd[counter],txcolsd[counter]);
           uievents.add(ev);
