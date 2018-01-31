@@ -48,14 +48,14 @@ public class RunUI extends Application {
       @Override
       public void handle(MouseEvent event) {
         System.out.println("deteckted click");
-        //System.exit(0);
+        System.exit(0);
       }
     });
     scene.setOnTouchPressed(new EventHandler<TouchEvent>() {
       @Override
       public void handle(TouchEvent event) {
         System.out.println("deteckted touch");
-        //System.exit(0);
+        System.exit(0);
       }
     });
   }

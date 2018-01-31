@@ -8,14 +8,6 @@ import java.util.Calendar;
 
 public class SingleCalendarProvider extends CalendarProvider {
   private URL url;
-  
-
-  
-
-  
-  private Calendar from;
-  private Calendar to;
-  
   private EventLoader loader;
   
   public SingleCalendarProvider(URL url, Calendar from, Calendar to){
